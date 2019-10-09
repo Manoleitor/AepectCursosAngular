@@ -1,0 +1,27 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand">Cursos AEPECT</a>
+  <div class="form-inline my-2 my-lg-0">
+  <input class="form-control mr-sm-2" type="usuario" #usuario placeholder="usuario" aria-label="usuario">
+  <input class="form-control mr-sm-2" type="password" #clave placeholder="clave" aria-label="clave">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="login(usuario.value, clave.value)">Acceso Ponentes</button>
+  </div>
+</nav>
+
+<br />
+
+<div id="container" style="width: 70%; padding: 30px; margin: auto;">
+  <div class="card text-center" style="margin: 10px"*ngFor='let c of cursos'>
+    <div class="card-header">
+      {{c.anio}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{c.nombre}}</h5>
+      <p class="card-text" *ngIf="c.maximos_participantes">Máximo {{ c.maximos_participantes }} participantes</p>
+      <p class="card-text" *ngIf="!c.maximos_participantes">Sin límite de admisión</p>
+      <a href="#" class="btn btn-primary">Apuntarse al curso</a>
+    </div>
+    <div class="card-footer text-muted">
+      {{c.fecha_creacion}}
+    </div>
+  </div>
+</div>
