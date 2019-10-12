@@ -1,3 +1,4 @@
+import { StoreDataService } from './services/store-data.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -9,21 +10,23 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { Injectable } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
 import { HomePonenteComponent } from './components/home-ponente/home-ponente.component';
+import { NavBarPonenteComponent } from './components/nav-bar-ponente/nav-bar-ponente.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EntradaComponent,
     NavBarComponent,
-    HomePonenteComponent
+    HomePonenteComponent,
+    NavBarPonenteComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
-    
+    StoreDataService
   ],
   bootstrap: [AppComponent]
 })

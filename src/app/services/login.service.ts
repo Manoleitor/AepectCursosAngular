@@ -1,9 +1,12 @@
+import { StoreDataService } from './store-data.service';
 import { LoginRQ } from './../clases/loginRQ';
 import { LoginRS } from './../clases/loginRS';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, from, empty, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+
+
 
 
 @Injectable({
@@ -11,7 +14,8 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class LoginService {
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient,
+    private _storeDataService: StoreDataService) { }
 
   public login(usuario: string, clave: string): Observable<Boolean> {
     const RQ: LoginRQ = {
@@ -22,8 +26,12 @@ export class LoginService {
       RQ
     }).pipe(map((res: LoginRS) => {
       if (res.error == 'Exito') {
+        this._storeDataService.changeName(usuario);
+        this._storeDataService.changeToken(res.token);
         return true;
       } else {
+        this._storeDataService.changeName('');
+        this._storeDataService.changeToken('');
         return false;
       }
     }),
