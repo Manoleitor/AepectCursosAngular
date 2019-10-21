@@ -5,6 +5,7 @@ import { Curso } from '../clases/curso';
 import { Observable, of, from } from 'rxjs';
 import { listaCursosRS } from '../clases/listaCursosRS';
 import { map } from 'rxjs/operators';
+import { readCursosRQ } from '../clases/readCursosRQ';
 
 
 @Injectable({
@@ -30,6 +31,25 @@ export class CursosServiceService {
         return res.cursos;
       })
     ); 
+  }
+
+  public getCursosPonente(token:string): Observable<Array<Curso>>
+  {
+    const RQ: readCursosRQ = {
+      token: token
+    }
+    return this._httpClient.post('http://localhost:8012/AepectApiRest/cursos/readCursos.php',
+    {
+      RQ
+    }).pipe(map((res: listaCursosRS) =>{
+      if (res.error=="Exito")
+      {
+        return res.cursos;
+      }else{
+        return [];
+      }
+      
+    }));
   }
 
 }

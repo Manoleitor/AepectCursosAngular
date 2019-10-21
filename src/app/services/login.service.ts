@@ -26,12 +26,10 @@ export class LoginService {
       RQ
     }).pipe(map((res: LoginRS) => {
       if (res.error == 'Exito') {
-        this._storeDataService.changeName(usuario);
-        this._storeDataService.changeToken(res.token);
+        localStorage.setItem('usuario', usuario);
+        localStorage.setItem('token', res.token);
         return true;
       } else {
-        this._storeDataService.changeName('');
-        this._storeDataService.changeToken('');
         return false;
       }
     }),
@@ -43,4 +41,24 @@ export class LoginService {
       })
     );
   }
+
+  public logout(token:string): Observable<Boolean> {
+    return this._httpClient.post('http://localhost:8012/AepectApiRest/logout.php', {
+      token
+    }).pipe(map((error: any) => {
+      if (error == 'Exito') {
+        return true;
+      } else {
+        return false;
+      }
+    }),
+      catchError((err, caught) => {
+        console.log(err);
+        let s: Subject<Boolean> = new Subject;
+        s.next(false);
+        return s;
+      })
+    );
+  }
+
 }

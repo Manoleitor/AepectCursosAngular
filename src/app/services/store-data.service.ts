@@ -6,8 +6,8 @@ import { Subject } from 'rxjs';
 })
 export class StoreDataService {
 
-  storeName: Subject<any> = new Subject<any>();
-  storeToken: Subject<any> = new Subject<any>()
+  storeName: Subject<string> = new Subject<string>();
+  storeToken: Subject<string> = new Subject<string>()
 
   constructor() { 
     this.storeToken.next('');

@@ -1,5 +1,5 @@
+import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
-import { StoreDataService } from './../../services/store-data.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -11,24 +11,29 @@ import { Location } from '@angular/common';
 export class NavBarPonenteComponent implements OnInit {
   public usuario: string;
 
-  constructor(private _storeDataService: StoreDataService,
-    private _router: Router,
-    private _location: Location) {     
+  constructor(private _router: Router,
+    private _location: Location,
+    private _loginService: LoginService) {     
      }
 
   ngOnInit() {
-    this.usuario = 'nombre';
-    this._storeDataService.storeName.subscribe(u =>
-      {
-        if (u != '')
-        {
-          this.usuario = u;
-        }
-        else{
-          this._location.replaceState['/'];
-          this._router.navigate['home'];
-        }
-      });
+    this.usuario = localStorage.getItem('userName');
+    if (this.usuario == null)
+    {
+      this.goHome();
+    }
+  }
+
+  public exit()
+  {
+    this._loginService.logout(localStorage.getItem('token')).subscribe();
+    this.goHome();
+  }
+
+  private goHome()
+  {
+    this._location.replaceState('/');
+    this._router.navigate(['home']);
   }
 
 }

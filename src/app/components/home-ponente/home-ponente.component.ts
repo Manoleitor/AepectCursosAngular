@@ -14,29 +14,30 @@ import { Location } from '@angular/common';
 export class HomePonenteComponent implements OnInit {
 
   private token: string;
+  public cursos : Array<Curso>;
 
 
   constructor(private _cursosServiceService: CursosServiceService,
-    private _storeDataService: StoreDataService,
     private _router: Router,
     private _location: Location) {
-    this._storeDataService.storeToken.subscribe( t => {
-      if (t != '')
+      this.token = localStorage.getItem('token');
+      if(this.token == null)
       {
-        this.token = t;
-      }else{
-        this.exit();
+        this.goHome();
       }
-    });
-    }  
-
-  ngOnInit() {    
   }
 
-  private exit()
-  {
-    this._location.replaceState['/'];
-    this._router.navigate['home'];
+  ngOnInit() {
+    this._cursosServiceService.getCursosPonente(this.token).subscribe(res=>
+      {
+        this.cursos = res;
+      }
+    );
+  }
+
+  private goHome() {
+    this._location.replaceState('/');
+    this._router.navigate(['home']);
   }
 
 }
