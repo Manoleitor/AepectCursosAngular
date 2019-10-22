@@ -40,4 +40,9 @@ export class HomePonenteComponent implements OnInit {
     this._router.navigate(['home']);
   }
 
+  public verDetalle(id:string)
+  {
+    console.log(id);
+  }
+
 }
