@@ -1,6 +1,6 @@
 import { StoreDataService } from './../../services/store-data.service';
 import { Curso } from './../../clases/curso';
-import { CursosServiceService } from './../../services/cursos-service.service';
+import { CursosService } from './../../services/cursos-service.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -17,7 +17,7 @@ export class HomePonenteComponent implements OnInit {
   public cursos : Array<Curso>;
 
 
-  constructor(private _cursosServiceService: CursosServiceService,
+  constructor(private _CursosService: CursosService,
     private _router: Router,
     private _location: Location) {
       this.token = localStorage.getItem('token');
@@ -28,7 +28,7 @@ export class HomePonenteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._cursosServiceService.getCursosPonente(this.token).subscribe(res=>
+    this._CursosService.getCursosPonente(this.token).subscribe(res=>
       {
         this.cursos = res;
       }
@@ -42,7 +42,7 @@ export class HomePonenteComponent implements OnInit {
 
   public verDetalle(id:string)
   {
-    console.log(id);
+    this._router.navigate(['edicion-curso', id]);
   }
 
 }

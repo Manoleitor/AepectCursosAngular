@@ -11,7 +11,7 @@ import { readCursosRQ } from '../clases/readCursosRQ';
 @Injectable({
   providedIn: 'root'
 })
-export class CursosServiceService {
+export class CursosService {
 
   constructor(private _httpClient: HttpClient) { }
 

@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
 import { HomePonenteComponent } from './components/home-ponente/home-ponente.component';
 import { NavBarPonenteComponent } from './components/nav-bar-ponente/nav-bar-ponente.component';
+import { EdicionCursoComponent } from './components/edicion-curso/edicion-curso.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavBarPonenteComponent } from './components/nav-bar-ponente/nav-bar-pon
     EntradaComponent,
     NavBarComponent,
     HomePonenteComponent,
-    NavBarPonenteComponent
+    NavBarPonenteComponent,
+    EdicionCursoComponent
   ],
   imports: [
     BrowserModule,
