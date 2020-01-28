@@ -1,6 +1,6 @@
 import { StoreDataService } from './../../services/store-data.service';
 import { Curso } from './../../clases/curso';
-import { CursosService } from './../../services/cursos-service.service';
+import { CursosService } from '../../services/cursos.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';

@@ -6,6 +6,8 @@ import { Observable, of, from } from 'rxjs';
 import { listaCursosRS } from '../clases/listaCursosRS';
 import { map } from 'rxjs/operators';
 import { readCursosRQ } from '../clases/readCursosRQ';
+import { getCursoRQ } from '../clases/getCursoRQ';
+import { getCursoRS } from '../clases/getCursoRS';
 
 
 @Injectable({
@@ -14,16 +16,6 @@ import { readCursosRQ } from '../clases/readCursosRQ';
 export class CursosService {
 
   constructor(private _httpClient: HttpClient) { }
-
-  // public getCursosListEntrada(): Observable<Array<Curso>> {
-  //   return Observable.create((observer: Observable) => {
-  //     this._httpClient.get('http://localhost:8012/AepectApiRest/cursos/getCursosList.php')
-  //       .subscribe((res: listaCursosRS) => {
-  //         observer.next(res.cursos);
-  //         observer.complete();
-  //       }, err => observer.error(err))
-  //   })
-  // }
 
   public getCursosListEntrada(): Observable<Array<Curso>> {
     return this._httpClient.get('http://localhost:8012/AepectApiRest/cursos/getCursosList.php').pipe(
@@ -48,8 +40,27 @@ export class CursosService {
       }else{
         return [];
       }
-      
     }));
+  }
+
+  public getCurso(token:string, id:number): Observable<Curso>
+  {
+    const RQ: getCursoRQ = {
+      token: token,
+      id: id
+    }
+    return this._httpClient.post('http://localhost:8012/AepectApiRest/cursos/getCurso.php',
+    {
+      RQ
+    }).pipe(map((res: getCursoRS) =>{
+      if (res.error=="Exito")
+      {
+        return res.curso;
+      }else{
+        return undefined;
+      }
+    }));
+
   }
 
 }

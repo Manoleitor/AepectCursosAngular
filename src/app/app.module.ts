@@ -13,6 +13,7 @@ import { HomePonenteComponent } from './components/home-ponente/home-ponente.com
 import { NavBarPonenteComponent } from './components/nav-bar-ponente/nav-bar-ponente.component';
 import { EdicionCursoComponent } from './components/edicion-curso/edicion-curso.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
