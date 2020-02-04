@@ -1,0 +1,76 @@
+<div id="container" style="width: 70%; padding: 30px; margin: auto;">
+  <div class="card text-center" style="margin: 10px" *ngIf="!(mostrarmensajeExito || mostrarmensajefracaso)">
+    <div class="card-header">
+      {{anio}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{nombreCurso}}</h5>
+
+      <table class="table">
+        <tr>
+          <td>
+            <label>Nombre:</label>
+          </td>
+          <td>
+            <input type="text" #nombre placeholder="Nombre">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Apellidos:</label>
+          </td>
+          <td>
+            <input type="text" #apellidos placeholder="Apellidos">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Email:</label>
+          </td>
+          <td>
+            <input type="email" #email placeholder="Email" required>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Repetir Email:</label>
+          </td>
+          <td>
+            <input type="email" #emailRepetido placeholder="Repetir Email" required>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>DNI:</label>
+          </td>
+          <td>
+            <input type="text" #dni placeholder="9 dígitos con letra" pattern="[0-9]{8}[A-Za-z]">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Pasaporte:</label>
+          </td>
+          <td>
+            <input type="text" #pasaporte placeholder="No es obligatorio">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Socio:</label>
+          </td>
+          <td>
+            <select #socio>
+              <option value=0 selected>No</option>
+              <option value=1>Sí</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <button class="btn btn-primary"
+        (click)="apuntarse(nombre.value, apellidos.value, email.value, emailRepetido.value, dni.value, pasaporte.value, socio.value)">Apuntarse
+        al curso</button>
+
+    </div>
+  </div>
+</div>

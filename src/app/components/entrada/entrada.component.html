@@ -18,7 +18,7 @@
       <h5 class="card-title">{{c.nombre}}</h5>
       <p class="card-text" *ngIf="c.maximos_participantes">Máximo {{ c.maximos_participantes }} participantes</p>
       <p class="card-text" *ngIf="!c.maximos_participantes">Sin límite de admisión</p>
-      <a href="#" class="btn btn-primary">Apuntarse al curso</a>
+      <button class="btn btn-primary" (click)="irFormulario(c.id, c.nombre, c.anio)">Apuntarse al curso</button>
     </div>
     <div class="card-footer text-muted">
       {{c.fecha_creacion}}

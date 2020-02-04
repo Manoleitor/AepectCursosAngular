@@ -12,6 +12,7 @@ import { HttpClientModule} from '@angular/common/http';
 import { HomePonenteComponent } from './components/home-ponente/home-ponente.component';
 import { NavBarPonenteComponent } from './components/nav-bar-ponente/nav-bar-ponente.component';
 import { EdicionCursoComponent } from './components/edicion-curso/edicion-curso.component';
+import { NuevoAsistenteFormComponent } from './components/nuevo-asistente-form/nuevo-asistente-form.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { EdicionCursoComponent } from './components/edicion-curso/edicion-curso.
     NavBarComponent,
     HomePonenteComponent,
     NavBarPonenteComponent,
-    EdicionCursoComponent
+    EdicionCursoComponent,
+    NuevoAsistenteFormComponent
   ],
   imports: [
     BrowserModule,

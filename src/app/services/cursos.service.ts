@@ -1,3 +1,6 @@
+import { asistente } from './../clases/asistente';
+import { createAsistenteRS } from './../clases/createAsistenteRS';
+import { createAsistenteRQ } from './../clases/createAsistenteRQ';
 import { Injectable } from '@angular/core';
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { Response } from '@angular/http';
@@ -60,7 +63,17 @@ export class CursosService {
         return undefined;
       }
     }));
+  }
 
+  public postAsistente(createAsistenteRQ:createAsistenteRQ):Observable<createAsistenteRS>{
+    let asistente = createAsistenteRQ.asistente;
+
+    return this._httpClient.post('http://localhost:8012/AepectApiRest/asistentes/createAsistente.php',
+    {
+      asistente
+    }).pipe(map((res: createAsistenteRS) =>{
+      return res;
+    }));
   }
 
 }
