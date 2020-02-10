@@ -16,7 +16,7 @@ export class EdicionCursoComponent implements OnInit {
   private token: string;
   private id: number;
   private curso: Curso;
-  private asistentes: Array<Asistente>;
+  private asistentes: Array<asistente>;
 
 
   constructor(private _cursosService: CursosService,
