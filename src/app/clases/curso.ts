@@ -1,4 +1,4 @@
-import { Asistente } from "./asistente";
+import { asistente } from "./asistente";
 
 export class Curso{
 
@@ -7,6 +7,6 @@ export class Curso{
     public anio: string;
     public maximos_participantes?: number;
     public fecha_creacion: Date;
-    public asistentes?: Array<Asistente>;
+    public asistentes?: Array<asistente>;
   
 }

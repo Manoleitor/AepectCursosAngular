@@ -8,11 +8,12 @@ import { EntradaComponent } from './components/entrada/entrada.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 import { Injectable } from '@angular/core';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomePonenteComponent } from './components/home-ponente/home-ponente.component';
 import { NavBarPonenteComponent } from './components/nav-bar-ponente/nav-bar-ponente.component';
 import { EdicionCursoComponent } from './components/edicion-curso/edicion-curso.component';
 import { NuevoAsistenteFormComponent } from './components/nuevo-asistente-form/nuevo-asistente-form.component';
+import { InterceptorService } from './services/interceptor.service';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { NuevoAsistenteFormComponent } from './components/nuevo-asistente-form/n
     HttpClientModule,
   ],
   providers: [
-    StoreDataService
+    StoreDataService,
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

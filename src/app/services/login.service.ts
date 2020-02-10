@@ -22,7 +22,7 @@ export class LoginService {
       usuario: usuario,
       clave: clave
     }
-    return this._httpClient.post('http://localhost:8012/AepectApiRest/login.php', {
+    return this._httpClient.post('http://AepectApiRest/login.php', {
       RQ
     }).pipe(map((res: LoginRS) => {
       if (res.error == 'Exito') {
@@ -43,7 +43,7 @@ export class LoginService {
   }
 
   public logout(token:string): Observable<Boolean> {
-    return this._httpClient.post('http://localhost:8012/AepectApiRest/logout.php', {
+    return this._httpClient.post('http://AepectApiRest/logout.php', {
       token
     }).pipe(map((error: any) => {
       if (error == 'Exito') {

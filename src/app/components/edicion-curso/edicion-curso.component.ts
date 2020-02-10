@@ -3,7 +3,7 @@ import { CursosService } from '../../services/cursos.service';
 import { Curso } from './../../clases/curso';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Asistente } from 'src/app/clases/asistente';
+import { asistente } from 'src/app/clases/asistente';
 import "snapsvg-cjs";
 
 @Component({
