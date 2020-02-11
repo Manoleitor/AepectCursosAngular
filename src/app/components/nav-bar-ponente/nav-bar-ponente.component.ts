@@ -17,7 +17,7 @@ export class NavBarPonenteComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.usuario = localStorage.getItem('userName');
+    this.usuario = localStorage.getItem('usuario');
     if (this.usuario == null)
     {
       this.goHome();

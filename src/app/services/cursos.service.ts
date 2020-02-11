@@ -21,7 +21,7 @@ export class CursosService {
   constructor(private _httpClient: HttpClient) { }
 
   public getCursosListEntrada(): Observable<Array<Curso>> {
-    return this._httpClient.get('http://AepectApiRest/cursos/getCursosList.php').pipe(
+    return this._httpClient.get('AepectApiRest/cursos/getCursosList.php').pipe(
       map((res: listaCursosRS) => {
         return res.cursos;
       })
@@ -33,7 +33,7 @@ export class CursosService {
     const RQ: readCursosRQ = {
       token: token
     }
-    return this._httpClient.post('http://AepectApiRest/cursos/readCursos.php',
+    return this._httpClient.post('AepectApiRest/cursos/readCursos.php',
     {
       RQ
     }).pipe(map((res: listaCursosRS) =>{
@@ -52,7 +52,7 @@ export class CursosService {
       token: token,
       id: id
     }
-    return this._httpClient.post('http://AepectApiRest/cursos/getCurso.php',
+    return this._httpClient.post('AepectApiRest/cursos/getCurso.php',
     {
       RQ
     }).pipe(map((res: getCursoRS) =>{
@@ -68,7 +68,7 @@ export class CursosService {
   public postAsistente(createAsistenteRQ:createAsistenteRQ):Observable<createAsistenteRS>{
     let asistente = createAsistenteRQ.asistente;
 
-    return this._httpClient.post('http://AepectApiRest/asistentes/createAsistente.php',
+    return this._httpClient.post('AepectApiRest/asistentes/createAsistente.php',
     {
       asistente
     }).pipe(map((res: createAsistenteRS) =>{

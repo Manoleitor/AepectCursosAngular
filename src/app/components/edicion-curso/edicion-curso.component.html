@@ -1,7 +1,9 @@
 <app-nav-bar-ponente></app-nav-bar-ponente>
 <br/>
 
-<table class="table table-dark">
+<div class="container">
+  <div class="card">
+<table class="table">
     <thead>
       <tr>
         <th scope="col">Nombre</th>
@@ -25,17 +27,14 @@
         <td>{{a.fecha_inscripcion}}</td>
         <td>{{a.fecha_baja}}</td>
         <td>
-                <img src="assets/svg/pencil.svg">                
+            <button class="btn btn-warning">Editar</button>                
         </td>
         <td>
-                <img src="assets/svg/trashcan.svg">
+            <button class="btn btn-danger">Eliminar</button>
         </td>
       </tr>
     </tbody>
   </table>
+  </div>
+</div>
 
-
-
-  <svg>
-        <use xlink:href="assets/svg/pencil.svg"></use>
-      </svg>

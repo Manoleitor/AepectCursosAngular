@@ -1,5 +1,11 @@
+<nav class="navbar navbar-light bg-light">
+  <a routerLink="/entrada" routerLinkActive="active" class="btn btn-warning">Volver</a>
+</nav>
+
+
+
 <div id="container" style="width: 70%; padding: 30px; margin: auto;">
-  <div class="card text-center" style="margin: 10px" *ngIf="!(mostrarmensajeExito || mostrarmensajefracaso)">
+  <div class="card text-center" style="margin: 10px" *ngIf="!mostrarMensajeExito && !mostrarMensajeFrasaco">
     <div class="card-header">
       {{anio}}
     </div>
@@ -44,7 +50,7 @@
             <label>DNI:</label>
           </td>
           <td>
-            <input type="text" #dni placeholder="9 dígitos con letra" pattern="[0-9]{8}[A-Za-z]">
+            <input type="text" #dni placeholder="8 dígitos con letra" pattern="[0-9]{8}[A-Za-z]">
           </td>
         </tr>
         <tr>
@@ -73,4 +79,18 @@
 
     </div>
   </div>
+
+  <div class="card text-center" style="margin: 10px" *ngIf="mostrarMensajeFrasaco">
+      <div class="card-body">
+          <h2 class="text-danger">Ha ocurrido un problema al inscribirse al curso</h2>
+      </div>
+  </div>
+
+  <div class="card text-center" style="margin: 10px" *ngIf="mostrarMensajeExito">
+      <div class="card-body">
+          <h2 class="text-success">Te has inscrito al curso</h2>
+      </div>
+  </div>
+
 </div>
+

@@ -15,6 +15,7 @@ export class EdicionCursoComponent implements OnInit {
 
   private token: string;
   private id: number;
+  private maximosParticipantes: number;
   private curso: Curso;
   private asistentes: Array<asistente>;
 

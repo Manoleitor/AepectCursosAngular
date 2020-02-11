@@ -28,7 +28,9 @@ export class NuevoAsistenteFormComponent implements OnInit {
     this.nombreCurso = this._activatedRoute.snapshot.params["nombre"];
     this.anio = this._activatedRoute.snapshot.params["anio"];
 
-    this.mostrarMensajeExito = this.mostrarMensajeFrasaco = false;
+    this.mostrarMensajeExito = false;
+    
+    this.mostrarMensajeFrasaco = false;
   }
 
   public apuntarse(
