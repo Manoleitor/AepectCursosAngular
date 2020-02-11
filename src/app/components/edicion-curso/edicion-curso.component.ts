@@ -15,8 +15,7 @@ export class EdicionCursoComponent implements OnInit {
 
   private token: string;
   private id: number;
-  private maximosParticipantes: number;
-  private curso: Curso;
+  public curso: Curso;
   private asistentes: Array<asistente>;
 
 
@@ -34,7 +33,7 @@ export class EdicionCursoComponent implements OnInit {
   ngOnInit() {
 
     this.id = this._activatedRoute.snapshot.params["id"];
-    this._cursosService.getCurso(this.token, this.id).subscribe(res => {
+    this._cursosService.getCurso(this.token, this.id).subscribe(res => {      
       this.curso = res;
       if (this.curso.asistentes != undefined)
       {
@@ -48,6 +47,16 @@ export class EdicionCursoComponent implements OnInit {
   private goHome() {
     this._location.replaceState('/');
     this._router.navigate(['home']);
+  }
+
+  public tienePlaza(plaza:number)
+  {  
+    if (this.curso[0].maximos_participantes != undefined)
+    {
+      return this.curso[0].maximos_participantes > plaza  ? true : false;
+    }
+
+    return true; // si no hay numero fijo máximo de plazas devolver siempre verdadero
   }
 
 }

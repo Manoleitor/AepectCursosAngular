@@ -2,10 +2,25 @@
 <br/>
 
 <div class="container">
+
+  <div class="card" *ngIf="curso">
+      <div class="card-header">
+          {{curso[0].anio}}
+      </div>
+        <div class="card-body">
+          <h5 class="card-title">{{curso[0].nombre}}</h5>
+          <p class="card-text" *ngIf="curso[0].maximos_participantes">Máximo {{ curso[0].maximos_participantes }} participantes</p>
+          <p class="card-text" *ngIf="!curso[0].maximos_participantes">Sin límite de admisión</p>
+      </div>
+  </div>
+  
+
+
   <div class="card">
 <table class="table">
     <thead>
       <tr>
+        <th scope="col">Índice</th>
         <th scope="col">Nombre</th>
         <th scope="col">Email</th>
         <th scope="col">Dni</th>
@@ -17,7 +32,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let a of asistentes">
+      <tr *ngFor="let a of asistentes; let i = index"  [ngClass]="(tienePlaza(i)) ? '': 'text-info' "  >
+        <td>{{ i + 1 }}</td>
         <td>{{a.nombre}} {{a.apellidos}}</td>
         <td>{{a.email}}</td>
         <td>{{a.dni}}</td>
