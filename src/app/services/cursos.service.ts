@@ -11,6 +11,12 @@ import { map } from 'rxjs/operators';
 import { readCursosRQ } from '../clases/readCursosRQ';
 import { getCursoRQ } from '../clases/getCursoRQ';
 import { getCursoRS } from '../clases/getCursoRS';
+import { getAsistenteRQ } from '../clases/getAsistenteRQ';
+import { getAsistenteRS } from '../clases/getAsistenteRS';
+import { updateAsistenteRQ } from '../clases/updateAsistenteRQ';
+import { updateAsistenteRS } from '../clases/updateAsistenteRS';
+import { deleteAsistenteRQ } from '../clases/deleteAsistenteRQ';
+import { deleteAsistenteRS } from '../clases/deleteAsistenteRS';
 
 
 @Injectable({
@@ -65,13 +71,41 @@ export class CursosService {
     }));
   }
 
-  public postAsistente(createAsistenteRQ:createAsistenteRQ):Observable<createAsistenteRS>{
-    let asistente = createAsistenteRQ.asistente;
-
+  public postAsistente(RQ:createAsistenteRQ):Observable<createAsistenteRS>{
     return this._httpClient.post('AepectApiRest/asistentes/createAsistente.php',
     {
-      asistente
+      RQ
     }).pipe(map((res: createAsistenteRS) =>{
+      return res;
+    }));
+  }
+
+  public updateAsistente(RQ:updateAsistenteRQ):Observable<updateAsistenteRS>{
+    return this._httpClient.post('AepectApiRest/asistentes/updateAsistente.php',
+    {
+      RQ
+    }).pipe(map((res: createAsistenteRS) =>{
+      return res;
+    }));
+  }
+
+  public getAsistente(RQ:getAsistenteRQ):Observable<asistente>{
+    return this._httpClient.post('AepectApiRest/asistentes/readAsistente.php', {
+      RQ
+    }).pipe(map((res: getAsistenteRS) =>{
+      if (res.error=="Exito")
+      {
+        return res.asistente;
+      }else{
+        return undefined;
+      }
+    }));
+  }
+
+  public deleteAsistente(RQ:deleteAsistenteRQ):Observable<deleteAsistenteRS>{
+    return this._httpClient.post('AepectApiRest/asistentes/deleteAsistente.php', {
+      RQ
+    }).pipe(map((res: deleteAsistenteRS) =>{
       return res;
     }));
   }

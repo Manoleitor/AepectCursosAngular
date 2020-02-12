@@ -1,6 +1,7 @@
 import { StoreDataService } from './services/store-data.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { NavBarPonenteComponent } from './components/nav-bar-ponente/nav-bar-pon
 import { EdicionCursoComponent } from './components/edicion-curso/edicion-curso.component';
 import { NuevoAsistenteFormComponent } from './components/nuevo-asistente-form/nuevo-asistente-form.component';
 import { InterceptorService } from './services/interceptor.service';
+
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import { InterceptorService } from './services/interceptor.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule      
   ],
   providers: [
     StoreDataService,
