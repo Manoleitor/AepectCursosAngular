@@ -1,25 +1,23 @@
 <app-nav-bar-ponente></app-nav-bar-ponente>
-<br/>
+<br />
 
 <div class="container">
 
-
   <div class="card" *ngIf="curso">
-      <div class="card-header">
-          {{curso[0].anio}}
-      </div>
-        <div class="card-body">
-          <h5 class="card-title">{{curso[0].nombre}}</h5>
-          <p class="card-text" *ngIf="curso[0].maximos_participantes">Máximo {{ curso[0].maximos_participantes }} participantes</p>
-          <p class="card-text" *ngIf="!curso[0].maximos_participantes">Sin límite de admisión</p>
-      </div>
+    <div class="card-header">
+      {{curso[0].anio}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{curso[0].nombre}}</h5>
+      <p class="card-text" *ngIf="curso[0].maximos_participantes">Máximo {{ curso[0].maximos_participantes }}
+        participantes</p>
+      <p class="card-text" *ngIf="!curso[0].maximos_participantes">Sin límite de admisión</p>
+    </div>
   </div>
 
   <hr>
 
-
-
-<table class="table table-light">
+  <table class="table table-light">
     <thead>
       <tr>
         <th scope="col">Índice</th>
@@ -33,9 +31,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let a of asistentes; let i = index"  [ngClass]="(tienePlaza(i)) ? '': 'text-info'">
+      <tr *ngFor="let a of asistentes; let i = index" [ngClass]="(tienePlaza(i)) ? '': 'text-warning'">
         <td>{{ i + 1 }}</td>
-        <td *ngIf="editandoEsteAsistente(i)"> <input value={{a.nombre}} [(ngModel)]="a.nombre" type="text"> <input value={{a.apellidos}} [(ngModel)]="a.apellidos" type="text"></td>
+        <td *ngIf="editandoEsteAsistente(i)"> <input value={{a.nombre}} [(ngModel)]="a.nombre" type="text"> <input
+            value={{a.apellidos}} [(ngModel)]="a.apellidos" type="text"></td>
         <td *ngIf="!editandoEsteAsistente(i)">{{a.nombre}} {{a.apellidos}}</td>
         <td *ngIf="editandoEsteAsistente(i)"> <input [(ngModel)]="a.email" value={{a.email}} type="email"> </td>
         <td *ngIf="!editandoEsteAsistente(i)">{{a.email}}</td>
@@ -44,26 +43,40 @@
         <td *ngIf="editandoEsteAsistente(i)"> <input [(ngModel)]="a.pasaporte" value={{a.pasaporte}} type="text">
         <td *ngIf="!editandoEsteAsistente(i)">{{a.pasaporte}}</td>
         <td *ngIf="editandoEsteAsistente(i)">
-            <select [(ngModel)]="a.socio" [(ngModel)]="a.socio">
-                <option [value]="1" [selected]="a.socio ==1">Socio</option>
-                <option [value]="0" [selected]="a.socio ==0">No socio</option>
-            </select>
-          </td>
+          <select [(ngModel)]="a.socio" [(ngModel)]="a.socio">
+            <option [value]="1" [selected]="a.socio ==1">Socio</option>
+            <option [value]="0" [selected]="a.socio ==0">No socio</option>
+          </select>
+        </td>
         <td *ngIf="a.socio == 1 && !editandoEsteAsistente(i)">socio</td>
         <td *ngIf="a.socio == 0 && !editandoEsteAsistente(i)">no socio</td>
-        <td *ngIf="editandoEsteAsistente(i)"> <input [(ngModel)]="a.fecha_inscripcion" value={{a.fecha_inscripcion}} type="datetime">
+        <td *ngIf="editandoEsteAsistente(i)"> <input [(ngModel)]="a.fecha_inscripcion" value={{a.fecha_inscripcion}}
+            type="datetime">
         <td *ngIf="!editandoEsteAsistente(i)">{{a.fecha_inscripcion}}</td>
         <td>
-            <div [style.visibility]="editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-warning" (click)="irEditandoAsistente(i)">Editar</div>
-            <div [style.visibility]="!editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-success" (click)="guardarAsistente(a)">Guardar</div>                
+          <div [style.visibility]="editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-warning"
+            (click)="irEditandoAsistente(i)">Editar</div>
+          <div [style.visibility]="!editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-success"
+            (click)="guardarAsistente(a)">Guardar</div>
         </td>
         <td>
-            <div [style.visibility]="editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-danger" (click)="eliminarAsistente(a, i)">Eliminar</div>
+          <div [style.visibility]="editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-danger"
+            (click)="eliminarAsistente(a, i)">Eliminar</div>
         </td>
       </tr>
 
     </tbody>
   </table>
 
-</div>
+  <hr>
 
+  <div class="card">
+      <div class="card-header">
+          Emails
+      </div>
+      <div class="card-body">
+        {{listaEmails}}
+      </div>
+  </div>
+  <hr>
+</div>

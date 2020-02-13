@@ -22,6 +22,7 @@ export class EdicionCursoComponent implements OnInit {
   private curso: Curso;
   private asistentes: Array<asistente>;
   private idAsistenteEditar:number;
+  private listaEmails:string = "";
 
 
   constructor(private _cursosService: CursosService,
@@ -43,6 +44,7 @@ export class EdicionCursoComponent implements OnInit {
       if (this.curso.asistentes != undefined)
       {
         this.asistentes = this.curso.asistentes;
+        this.rellenarListaEmails();
       }
     }
     );
@@ -50,58 +52,14 @@ export class EdicionCursoComponent implements OnInit {
     this.idAsistenteEditar = -1;
   }
 
-  private goHome() {
-    this._location.replaceState('/');
-    this._router.navigate(['home']);
-  }
-
-  tienePlaza(plaza:number)
-  {  
-    if (this.curso[0].maximos_participantes != undefined)
-    {
-      return this.curso[0].maximos_participantes > plaza  ? true : false;
-    }
-
-    return true; // si no hay numero fijo máximo de plazas devolver siempre verdadero
-  }
-
-  irEditandoAsistente(id:number)
-  {
-    this.idAsistenteEditar=id;
-  }
-
   editandoEsteAsistente(id:number)
   {
     return id == this.idAsistenteEditar;
   }
 
-
   editandoRegistro()
   {
     return this.idAsistenteEditar == -1;
-  }
-
-  guardarAsistente(a:asistente)
-  {
-   
-    const RQ:updateAsistenteRQ = {
-      token:this.token,
-      asistente:a
-    }
-    this._cursosService.updateAsistente(RQ).subscribe(res => {      
-      if(res.error == "exito")
-      {
-        const asistenteRQ:getAsistenteRQ = {
-          token:this.token,
-          id:a.id
-        };
-        this._cursosService.getAsistente(asistenteRQ).subscribe(res=> this.asistentes[id]= res);
-      }
-      this.idAsistenteEditar= -1;
-    }
-    );
-
-    
   }
 
   eliminarAsistente(a:asistente, index:number)
@@ -116,12 +74,65 @@ export class EdicionCursoComponent implements OnInit {
           if(res.error == "Exito")
           {
             this.asistentes.splice(index,1);
+            this.rellenarListaEmails();
           }else{
   
           }
         })
     }    
   }
+
+  goHome() {
+    this._location.replaceState('/');
+    this._router.navigate(['home']);
+  }
+
+  guardarAsistente(a:asistente)
+  {
+    const RQ:updateAsistenteRQ = {
+      token:this.token,
+      asistente:a
+    }
+    this._cursosService.updateAsistente(RQ).subscribe(res => {      
+      if(res.error == "exito")
+      {
+        const asistenteRQ:getAsistenteRQ = {
+          token:this.token,
+          id:a.id
+        };
+        this._cursosService.getAsistente(asistenteRQ).subscribe(res=> {
+          this.asistentes[a.id]= res;
+          this.rellenarListaEmails();  
+        });
+      }
+      this.idAsistenteEditar= -1;
+    }
+    );
+  }
+
+  irEditandoAsistente(id:number)
+  {
+    this.idAsistenteEditar=id;
+  }
+
+  rellenarListaEmails()
+  {
+    this.listaEmails="";
+    let tmpEmails:string[] = [];
+    this.asistentes.forEach(asistente=>tmpEmails.push(asistente.email));
+    this.listaEmails = tmpEmails.join(", ");
+  }
+
+  tienePlaza(plaza:number)
+  {  
+    if (this.curso[0].maximos_participantes != undefined)
+    {
+      return this.curso[0].maximos_participantes > plaza  ? true : false;
+    }
+
+    return true; // si no hay numero fijo máximo de plazas devolver siempre verdadero
+  }
+
 
 }
 
