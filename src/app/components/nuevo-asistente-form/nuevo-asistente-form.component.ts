@@ -12,19 +12,26 @@ import { createAsistenteRQ } from 'src/app/clases/createAsistenteRQ';
 })
 export class NuevoAsistenteFormComponent implements OnInit {
 
-  public mensaje:string;
-  public id:number;
-  public nombreCurso:string;
-  public anio:string;
+  private mensaje:string;
+  private id:number;
+  private nombreCurso:string;
+  private anio:string;
 
-  public mostrarMensajeExito:boolean = false;
-  public mostrarMensajeFrasaco:Boolean = false;
+  private mostrarMensajeExito:boolean = false;
+  private mostrarMensajeFrasaco:Boolean = false;
   
+  asistente:asistente;
+
+  mostrarTransporte:boolean=true;
+
   constructor(private _activatedRoute: ActivatedRoute,
     private _cursosService: CursosService) { }
 
   ngOnInit() {
+    this.asistente = new asistente();
+    
     this.id = this._activatedRoute.snapshot.params["id"];
+    this.asistente.idCurso = this.id;
     this.nombreCurso = this._activatedRoute.snapshot.params["nombre"];
     this.anio = this._activatedRoute.snapshot.params["anio"];
 
@@ -34,15 +41,13 @@ export class NuevoAsistenteFormComponent implements OnInit {
   }
 
   public apuntarse(
-    nombre:string,
-    apellidos:string,
+    asistente:asistente,
     email:string,
     emailRepetido:string,
     dni:string,
     pasaporte:string,
-    socio:number)
+    )
   {
-
     if (email != emailRepetido)
     {
       this.mensaje = "Los correos electrónicos no coinciden";
@@ -50,18 +55,19 @@ export class NuevoAsistenteFormComponent implements OnInit {
     {
       this.mensaje = "Se debe inicar un DNI o un pasaporte";
     }else{
-      const asistente:asistente = {
-        nombre:nombre,
-        apellidos:apellidos,
-        email:email,
-        dni:dni,
-        pasaporte:pasaporte,
-        socio:socio,
-        idCurso:this.id
-      };
 
       const RQ:createAsistenteRQ = {
         asistente:asistente
+      }
+
+      if(asistente.pasaporte == undefined)
+      {
+        asistente.pasaporte = "";
+      }
+
+      if (asistente.dni == undefined)
+      {
+        asistente.dni == "";
       }
 
       this._cursosService.postAsistente(RQ).subscribe(res => {
@@ -73,7 +79,9 @@ export class NuevoAsistenteFormComponent implements OnInit {
         else{
           this.mostrarMensajeFrasaco = true;
         } 
-      });
+      },
+      error=>(this.mostrarMensajeFrasaco = true)
+      );
 
     }
   }

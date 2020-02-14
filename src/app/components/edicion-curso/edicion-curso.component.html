@@ -27,6 +27,7 @@
         <th scope="col">Pasaporte</th>
         <th scope="col">Socio</th>
         <th scope="col">Fecha Inscripción</th>
+        <th scope="col">Transporte</th>
         <th></th>
       </tr>
     </thead>
@@ -43,9 +44,9 @@
         <td *ngIf="editandoEsteAsistente(i)"> <input [(ngModel)]="a.pasaporte" value={{a.pasaporte}} type="text">
         <td *ngIf="!editandoEsteAsistente(i)">{{a.pasaporte}}</td>
         <td *ngIf="editandoEsteAsistente(i)">
-          <select [(ngModel)]="a.socio" [(ngModel)]="a.socio">
-            <option [value]="1" [selected]="a.socio ==1">Socio</option>
-            <option [value]="0" [selected]="a.socio ==0">No socio</option>
+          <select [(ngModel)]="a.socio">
+            <option value="1" [selected]="a.socio ==1">Socio</option>
+            <option value="0" [selected]="a.socio ==0">No socio</option>
           </select>
         </td>
         <td *ngIf="a.socio == 1 && !editandoEsteAsistente(i)">socio</td>
@@ -53,10 +54,17 @@
         <td *ngIf="editandoEsteAsistente(i)"> <input [(ngModel)]="a.fecha_inscripcion" value={{a.fecha_inscripcion}}
             type="datetime">
         <td *ngIf="!editandoEsteAsistente(i)">{{a.fecha_inscripcion}}</td>
+        <td *ngIf="editandoEsteAsistente(i)">
+          <select [(ngModel)]="a.transporte">
+            <option value="Coche" [selected]='a.transporte =="Coche"'>Coche</option>
+            <option value="Bus" [selected]='a.transporte =="Bus"'>Bus</option>
+          </select>
+        </td>
+        <td *ngIf="!editandoEsteAsistente(i)">{{a.transporte}}</td>
         <td>
-          <div [style.visibility]="editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-warning"
+          <div *ngIf="editandoRegistro()" class="btn btn-warning"
             (click)="irEditandoAsistente(i)">Editar</div>
-          <div [style.visibility]="!editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-success"
+          <div *ngIf="editandoEsteAsistente(i)" class="btn btn-success"
             (click)="guardarAsistente(a)">Guardar</div>
         </td>
         <td>
@@ -71,12 +79,79 @@
   <hr>
 
   <div class="card">
+    <div class="card-header">
+      Emails
+    </div>
+    <div class="card-body">
+      {{listaEmails}}
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="card">
+    <div class="card-header">
+      Admitidos
+    </div>
+    <table>
+      <tr *ngFor="let a of asistentes; let i = index" [ngClass]="(tienePlaza(i)) ? '': 'text-warning'">
+        <td>{{a.nombre}} {{a.apellidos}}</td>
+        <td *ngIf="a.socio == 1"> Socio </td>
+        <td *ngIf="a.socio == 0"> no Socio </td>
+        <td *ngIf="tienePlaza(i)"> Admitido </td>
+        <td *ngIf="!tienePlaza(i)"> No Admitido </td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="listaAdmitidosCoche!=''">
+  <hr>
+
+  <div class="card">
+    <div class="card-header">
+      Admitidos en Coche
+    </div>
+    <div class="card-body">
+      {{listaAdmitidosCoche}}
+    </div>
+  </div>
+
+  <div *ngIf="listaAdmitidosBus!=''">
+    <hr>
+  
+    <div class="card">
       <div class="card-header">
-          Emails
+        Admitidos en Bus
       </div>
       <div class="card-body">
-        {{listaEmails}}
+        {{listaAdmitidosBus}}
       </div>
-  </div>
+    </div>
   <hr>
+</div>
+
+<div *ngIf="listaNoAdmitidosCoche!=''">
+  <div class="card">
+    <div class="card-header">
+      No Admitidos en Coche
+    </div>
+    <div class="card-body">
+      {{listaNoAdmitidosCoche}}
+    </div>
+  </div>
+<hr>
+</div>
+
+<div *ngIf="listaNoAdmitidosBus!=''">
+  <div class="card">
+    <div class="card-header">
+      No Admitidos en Bus
+    </div>
+    <div class="card-body">
+      {{listaNoAdmitidosBus}}
+    </div>
+  </div>
+<hr>
+</div>
+
 </div>

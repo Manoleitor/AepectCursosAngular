@@ -35,7 +35,6 @@ export class EntradaComponent implements OnInit {
 
   public irFormulario(id:number, nombre:string, anio:string)
   {
-    console.log("hola");
     this._router.navigate(['nuevo-asistente-form', id, nombre, anio]);
   }
 

@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { asistente } from 'src/app/clases/asistente';
 import "snapsvg-cjs";
 import { getAsistenteRQ } from 'src/app/clases/getAsistenteRQ';
-import { createAsistenteRQ } from 'src/app/clases/createAsistenteRQ';
 import { updateAsistenteRQ } from 'src/app/clases/updateAsistenteRQ';
 import { deleteAsistenteRQ } from 'src/app/clases/deleteAsistenteRQ';
 
@@ -21,8 +20,12 @@ export class EdicionCursoComponent implements OnInit {
   private id: number;
   private curso: Curso;
   private asistentes: Array<asistente>;
-  private idAsistenteEditar:number;
-  private listaEmails:string = "";
+  private idAsistenteEditar: number;
+  private listaEmails: string = "";
+  private listaAdmitidosCoche: string = "";
+  private listaAdmitidosBus: string = "";
+  private listaNoAdmitidosCoche: string = "";
+  private listaNoAdmitidosBus: string = "";
 
 
   constructor(private _cursosService: CursosService,
@@ -39,12 +42,12 @@ export class EdicionCursoComponent implements OnInit {
   ngOnInit() {
 
     this.id = this._activatedRoute.snapshot.params["id"];
-    this._cursosService.getCurso(this.token, this.id).subscribe(res => {      
+    this._cursosService.getCurso(this.token, this.id).subscribe(res => {
       this.curso = res;
-      if (this.curso.asistentes != undefined)
-      {
+      if (this.curso.asistentes != undefined) {
         this.asistentes = this.curso.asistentes;
         this.rellenarListaEmails();
+        this.rellenarListasCocheYBus();
       }
     }
     );
@@ -52,34 +55,35 @@ export class EdicionCursoComponent implements OnInit {
     this.idAsistenteEditar = -1;
   }
 
-  editandoEsteAsistente(id:number)
-  {
+  editandoEsteAsistente(id: number) {
     return id == this.idAsistenteEditar;
   }
 
-  editandoRegistro()
-  {
+  editandoRegistro() {
     return this.idAsistenteEditar == -1;
   }
 
-  eliminarAsistente(a:asistente, index:number)
-  {
-    if (confirm("¿Seguro que quieres quitar a " + a.nombre + " " + a.apellidos + "?"))
-    {
-      const RQ:deleteAsistenteRQ= {
-        id:a.id,
-        token:this.token};
-      
-        this._cursosService.deleteAsistente(RQ).subscribe(res =>{
-          if(res.error == "Exito")
-          {
-            this.asistentes.splice(index,1);
-            this.rellenarListaEmails();
-          }else{
-  
-          }
-        })
-    }    
+  eliminarAsistente(a: asistente, index: number) {
+    if (confirm("¿Seguro que quieres quitar a " + a.nombre + " " + a.apellidos + "?")) {
+      const RQ: deleteAsistenteRQ = {
+        id: a.id,
+        token: this.token
+      };
+
+      this._cursosService.deleteAsistente(RQ).subscribe(res => {
+        if (res.error == "Exito") {
+          this.asistentes.splice(index, 1);
+          this.rellenarListaEmails();
+          this.rellenarListasCocheYBus();
+        } else {
+
+        }
+      }, error => {
+
+        this.mensajeError();
+      }
+      )
+    }
   }
 
   goHome() {
@@ -87,51 +91,105 @@ export class EdicionCursoComponent implements OnInit {
     this._router.navigate(['home']);
   }
 
-  guardarAsistente(a:asistente)
-  {
-    const RQ:updateAsistenteRQ = {
-      token:this.token,
-      asistente:a
+  guardarAsistente(a: asistente) {
+
+    this.rellenarListaEmails();
+    this.rellenarListasCocheYBus();
+
+    const RQ: updateAsistenteRQ = {
+      token: this.token,
+      asistente: a
     }
-    this._cursosService.updateAsistente(RQ).subscribe(res => {      
-      if(res.error == "exito")
-      {
-        const asistenteRQ:getAsistenteRQ = {
-          token:this.token,
-          id:a.id
+    this._cursosService.updateAsistente(RQ).subscribe(res => {
+      if (res.error == "Exito") {
+        const asistenteRQ: getAsistenteRQ = {
+          token: this.token,
+          id: a.id
         };
-        this._cursosService.getAsistente(asistenteRQ).subscribe(res=> {
-          this.asistentes[a.id]= res;
-          this.rellenarListaEmails();  
+        this._cursosService.getAsistente(asistenteRQ).subscribe(res => {
+          if (JSON.stringify(a).toUpperCase() !== JSON.stringify(res).toUpperCase())
+          {            
+            this.mensajeError();
+          }
+        }, error => {
+          this.mensajeError();
         });
       }
-      this.idAsistenteEditar= -1;
+      this.idAsistenteEditar = -1;
+    }, error => {
+      console.log(error);
+      this.mensajeError();
     }
     );
   }
 
-  irEditandoAsistente(id:number)
-  {
-    this.idAsistenteEditar=id;
+  irEditandoAsistente(id: number) {
+    this.idAsistenteEditar = id;
   }
 
-  rellenarListaEmails()
-  {
-    this.listaEmails="";
-    let tmpEmails:string[] = [];
-    this.asistentes.forEach(asistente=>tmpEmails.push(asistente.email));
+  mensajeError() {
+    if (confirm("Ha ocurrido un error ¿desea recargar la página?")) {
+      window.location.reload();
+    }
+  }
+
+
+  rellenarListasCocheYBus() {
+    this.listaAdmitidosCoche = "";
+    this.listaAdmitidosBus = "";
+    this.listaNoAdmitidosCoche = "";
+    this.listaNoAdmitidosBus = "";
+    let tpmListaAdmitidos: string[] = [];
+    let tmpListaAdmitidosBus: string[] = [];
+    let tpmListaNoAdmitidosCoche: string[] = [];
+    let tmpListaNoAdmitidosBus: string[] = [];
+
+    let plaza: number = 0;
+
+    this.asistentes.forEach(asistente => {
+      if (this.tienePlaza(plaza)) {        
+        if (asistente.transporte != undefined && asistente.transporte == "Coche")
+        {
+          tpmListaAdmitidos.push(asistente.nombre + " " + asistente.apellidos);
+        }
+        if(asistente.transporte != undefined && asistente.transporte == "Bus")
+        {
+          tmpListaAdmitidosBus.push(asistente.nombre + " " + asistente.apellidos);
+        }
+        
+      }else{
+        if (asistente.transporte != undefined && asistente.transporte == "Coche")
+        {
+          tpmListaNoAdmitidosCoche.push(asistente.nombre + " " + asistente.apellidos);
+        }
+        if(asistente.transporte != undefined && asistente.transporte == "Bus")
+        {
+          tmpListaNoAdmitidosBus.push(asistente.nombre + " " + asistente.apellidos);
+        }
+      }
+      plaza = plaza + 1;
+    });
+
+    this.listaAdmitidosCoche = tpmListaAdmitidos.join(", ");
+    this.listaAdmitidosBus = tmpListaAdmitidosBus.join(", ");
+    this.listaNoAdmitidosCoche = tpmListaNoAdmitidosCoche.join(", ");
+    this.listaNoAdmitidosBus = tmpListaNoAdmitidosBus.join(", ");
+  }
+
+  rellenarListaEmails() {
+    this.listaEmails = "";
+    let tmpEmails: string[] = [];
+    this.asistentes.forEach(asistente => tmpEmails.push(asistente.email));
     this.listaEmails = tmpEmails.join(", ");
   }
 
-  tienePlaza(plaza:number)
-  {  
-    if (this.curso[0].maximos_participantes != undefined)
-    {
-      return this.curso[0].maximos_participantes > plaza  ? true : false;
+  tienePlaza(plaza: number) {
+    if (this.curso[0].maximos_participantes != undefined) {
+      return this.curso[0].maximos_participantes > plaza ? true : false;
     }
-
     return true; // si no hay numero fijo máximo de plazas devolver siempre verdadero
   }
+
 
 
 }
