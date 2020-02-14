@@ -17,4 +17,5 @@ export class asistente{
     public transporte?: string;
     public codigo_pais?: string;
     public movil?: string;
+    public habitacion?: string;
 }

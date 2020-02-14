@@ -93,6 +93,18 @@
             </select>
           </td>
         </tr>
+        <tr>
+          <td>
+            <label>Habitación:</label>
+          </td>
+          <td>
+            <select [(ngModel)]="asistente.habitacion">
+              <option value="Simple" selected>Simple</option>
+              <option value="Doble">Doble</option>
+              <option value="Indiferente">Indiferente</option>
+            </select>
+          </td>
+        </tr>
       </table>
       <label *ngIf="mensaje" class="text-warning">{{mensaje}}</label>
       <button class="btn btn-primary"

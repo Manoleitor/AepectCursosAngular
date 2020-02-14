@@ -26,6 +26,14 @@ export class EdicionCursoComponent implements OnInit {
   private listaAdmitidosBus: string = "";
   private listaNoAdmitidosCoche: string = "";
   private listaNoAdmitidosBus: string = "";
+  private listaAdmitidosSimple: string="";
+  private listaNoAdmitidosSimple:string="";
+  private listaAdmitidosDoble:string="";
+  private listaNoAdmitidosDoble:string="";
+  private listaAdmitidosIndiferente:string="";
+  private listaNoAdmitidosIndiferente:string="";
+
+
   private tmpAsistente:asistente;
 
 
@@ -119,6 +127,7 @@ export class EdicionCursoComponent implements OnInit {
             this.mensajeError();
           }
         }, error => {
+          console.log(error);
           this.mensajeError();
         });
       }
@@ -147,33 +156,68 @@ export class EdicionCursoComponent implements OnInit {
     this.listaAdmitidosBus = "";
     this.listaNoAdmitidosCoche = "";
     this.listaNoAdmitidosBus = "";
+    this.listaAdmitidosDoble="";
+    this.listaAdmitidosSimple="";
+    this.listaAdmitidosIndiferente="";
     let tpmListaAdmitidos: string[] = [];
     let tmpListaAdmitidosBus: string[] = [];
     let tpmListaNoAdmitidosCoche: string[] = [];
     let tmpListaNoAdmitidosBus: string[] = [];
+    let tmplistaAdmitidosSimple:string[] = [];
+    let tmplistaAdmitidosDoble:string[] = [];
+    let tmplistaAdmitidosIndiferente:string[] = [];
+    let tmplistaNoAdmitidosSimple:string[] = [];
+    let tmplistaNoAdmitidosDoble:string[] = [];
+    let tmplistaNoAdmitidosIndiferente:string[] = [];
 
     let plaza: number = 0;
 
     this.asistentes.forEach(asistente => {
-      if (this.tienePlaza(plaza)) {        
+
+      let tmpNombre:string = asistente.nombre + " " + asistente.apellidos;
+
+      if (this.tienePlaza(plaza)) {  
         if (asistente.transporte != undefined && asistente.transporte == "Coche")
         {
-          tpmListaAdmitidos.push(asistente.nombre + " " + asistente.apellidos);
+          tpmListaAdmitidos.push(tmpNombre);
         }
         if(asistente.transporte != undefined && asistente.transporte == "Bus")
         {
-          tmpListaAdmitidosBus.push(asistente.nombre + " " + asistente.apellidos);
+          tmpListaAdmitidosBus.push(tmpNombre);
         }
+        if(asistente.habitacion != undefined && asistente.habitacion == "Simple")
+        {
+          tmplistaAdmitidosSimple.push(tmpNombre);
+        }else if(asistente.habitacion != undefined && asistente.habitacion == "Doble")
+        {
+          tmplistaAdmitidosDoble.push(tmpNombre);
+        }else if(asistente.habitacion != undefined && asistente.habitacion == "Indiferente")
+        {
+          tmplistaAdmitidosIndiferente.push(tmpNombre);
+        }
+
         
       }else{
         if (asistente.transporte != undefined && asistente.transporte == "Coche")
         {
-          tpmListaNoAdmitidosCoche.push(asistente.nombre + " " + asistente.apellidos);
+          tpmListaNoAdmitidosCoche.push(tmpNombre);
         }
         if(asistente.transporte != undefined && asistente.transporte == "Bus")
         {
-          tmpListaNoAdmitidosBus.push(asistente.nombre + " " + asistente.apellidos);
+          tmpListaNoAdmitidosBus.push(tmpNombre);
         }
+
+        if(asistente.habitacion != undefined && asistente.habitacion == "Simple")
+        {
+          tmplistaNoAdmitidosSimple.push(tmpNombre);
+        }else if(asistente.habitacion != undefined && asistente.habitacion == "Doble")
+        {
+          tmplistaNoAdmitidosDoble.push(tmpNombre);
+        }else if(asistente.habitacion != undefined && asistente.habitacion == "Indiferente")
+        {
+          tmplistaNoAdmitidosIndiferente.push(tmpNombre);
+        }
+
       }
       plaza = plaza + 1;
     });
@@ -182,6 +226,12 @@ export class EdicionCursoComponent implements OnInit {
     this.listaAdmitidosBus = tmpListaAdmitidosBus.join(", ");
     this.listaNoAdmitidosCoche = tpmListaNoAdmitidosCoche.join(", ");
     this.listaNoAdmitidosBus = tmpListaNoAdmitidosBus.join(", ");
+    this.listaAdmitidosSimple = tmplistaAdmitidosSimple.join(", ");
+    this.listaAdmitidosDoble = tmplistaAdmitidosDoble.join(", ");
+    this.listaAdmitidosIndiferente = tmplistaAdmitidosIndiferente.join(", ");
+    this.listaNoAdmitidosDoble = tmplistaNoAdmitidosDoble.join(", ");
+    this.listaNoAdmitidosSimple = tmplistaNoAdmitidosSimple.join(", ");
+    this.listaNoAdmitidosIndiferente = tmplistaNoAdmitidosIndiferente.join(", ");
   }
 
   rellenarListaEmails() {
