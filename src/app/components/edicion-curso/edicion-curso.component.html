@@ -62,7 +62,11 @@
           </select>
         </td>
         <td *ngIf="!editandoEsteAsistente(i)">{{a.transporte}}</td>
-        <td><div *ngIf="a.codigo_pais && a.codigo_pais != ''">+{{a.codigo_pais + ' '}}</div>{{a.movil}}</td>
+        <td *ngIf="editandoEsteAsistente(i)">
+          <input type="text" [(ngModel)]="a.codigo_pais" maxlength="4" size="4" placeholder="34" pattern="[0-9]{1,4}">
+          <input type="text" [(ngModel)]="a.movil" maxlength="9" size="9" pattern="[0-9]{9}">
+        </td>
+        <td *ngIf="!editandoEsteAsistente(i)"><div *ngIf="a.codigo_pais && a.codigo_pais != ''">+{{a.codigo_pais + ' '}}</div>{{a.movil}}</td>
         <td>
           <div *ngIf="editandoRegistro()" class="btn btn-warning" (click)="irEditandoAsistente(i)">Editar</div>
           <div *ngIf="editandoEsteAsistente(i)" class="btn btn-success" (click)="guardarAsistente(a)">Guardar</div>
