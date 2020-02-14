@@ -77,12 +77,28 @@ export class NuevoAsistenteFormComponent implements OnInit {
           this.mostrarMensajeExito = true;
         }
         else{
+          console.log(res.error);
           this.mostrarMensajeFrasaco = true;
         } 
       },
-      error=>(this.mostrarMensajeFrasaco = true)
+      error=>{this.mostrarMensajeFrasaco = true;
+      console.log(error);}
       );
 
+    }
+  }
+
+  rellenarDatosPrueba()
+  {
+    this.asistente = {
+      idCurso:this.id,
+      socio:0,
+      nombre:"Jose",
+      apellidos:"JJ",
+      email:"email@e.ni",
+      dni:"22222222A",
+      codigo_pais:"34",
+      movil:"666333999"
     }
   }
 }

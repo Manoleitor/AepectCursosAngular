@@ -8,6 +8,7 @@
   <div class="card text-center" style="margin: 10px" *ngIf="!mostrarMensajeExito && !mostrarMensajeFrasaco">
     <div class="card-header">
       {{anio}}
+      <div class="btn btn-warning" (click)="rellenarDatosPrueba()">Rellenar</div>
     </div>
     <div class="card-body">
       <h5 class="card-title">{{nombreCurso}}</h5>
@@ -50,7 +51,16 @@
             <label>DNI:</label>
           </td>
           <td>
-            <input type="text" [(ngModel)]="asistente.dni" #dni placeholder="8 dígitos con letra" pattern="[0-9]{8}[A-Za-z]">
+            <input type="text" [(ngModel)]="asistente.dni" #dni placeholder="8 dígitos con letra" maxlength="9" pattern="[0-9]{8}[A-Za-z]">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Móvil</label>
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="asistente.codigo_pais" maxlength="4" size="4" placeholder="34" pattern="[0-9]{1,4}">
+            <input type="text" [(ngModel)]="asistente.movil" maxlength="9" size="9" pattern="[0-9]{9}">
           </td>
         </tr>
         <tr>
@@ -84,6 +94,7 @@
           </td>
         </tr>
       </table>
+      <label *ngIf="mensaje" class="text-warning">{{mensaje}}</label>
       <button class="btn btn-primary"
         (click)="apuntarse(asistente, email.value, emailRepetido.value, dni.value, pasaporte.value)">Apuntarse
         al curso</button>

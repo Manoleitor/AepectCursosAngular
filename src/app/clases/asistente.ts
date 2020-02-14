@@ -15,5 +15,6 @@ export class asistente{
     public idCurso?: number;
     public fecha_baja?: Date;
     public transporte?: string;
-  
+    public codigo_pais?: string;
+    public movil?: string;
 }

@@ -26,6 +26,7 @@ export class EdicionCursoComponent implements OnInit {
   private listaAdmitidosBus: string = "";
   private listaNoAdmitidosCoche: string = "";
   private listaNoAdmitidosBus: string = "";
+  private tmpAsistente:asistente;
 
 
   constructor(private _cursosService: CursosService,
@@ -52,6 +53,12 @@ export class EdicionCursoComponent implements OnInit {
     }
     );
 
+    this.idAsistenteEditar = -1;
+  }
+
+  cancelarEdicion()
+  {
+    this.asistentes[this.idAsistenteEditar] = this.tmpAsistente;
     this.idAsistenteEditar = -1;
   }
 
@@ -125,6 +132,7 @@ export class EdicionCursoComponent implements OnInit {
 
   irEditandoAsistente(id: number) {
     this.idAsistenteEditar = id;
+    this.tmpAsistente = JSON.parse(JSON.stringify(this.asistentes[id]));
   }
 
   mensajeError() {

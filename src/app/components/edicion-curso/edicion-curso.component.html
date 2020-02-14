@@ -28,6 +28,7 @@
         <th scope="col">Socio</th>
         <th scope="col">Fecha Inscripción</th>
         <th scope="col">Transporte</th>
+        <th scope="col">Móvil</th>
         <th></th>
       </tr>
     </thead>
@@ -61,15 +62,14 @@
           </select>
         </td>
         <td *ngIf="!editandoEsteAsistente(i)">{{a.transporte}}</td>
+        <td><div *ngIf="a.codigo_pais && a.codigo_pais != ''">+{{a.codigo_pais + ' '}}</div>{{a.movil}}</td>
         <td>
-          <div *ngIf="editandoRegistro()" class="btn btn-warning"
-            (click)="irEditandoAsistente(i)">Editar</div>
-          <div *ngIf="editandoEsteAsistente(i)" class="btn btn-success"
-            (click)="guardarAsistente(a)">Guardar</div>
+          <div *ngIf="editandoRegistro()" class="btn btn-warning" (click)="irEditandoAsistente(i)">Editar</div>
+          <div *ngIf="editandoEsteAsistente(i)" class="btn btn-success" (click)="guardarAsistente(a)">Guardar</div>
         </td>
         <td>
-          <div [style.visibility]="editandoRegistro() ? 'visible' : 'hidden'" class="btn btn-danger"
-            (click)="eliminarAsistente(a, i)">Eliminar</div>
+          <div *ngIf="editandoRegistro()" class="btn btn-danger" (click)="eliminarAsistente(a, i)">Eliminar</div>
+          <div *ngIf="editandoEsteAsistente(i)" class="btn btn-warning" (click)="cancelarEdicion()">Cancelar</div>
         </td>
       </tr>
 
@@ -105,53 +105,53 @@
   </div>
 
   <div *ngIf="listaAdmitidosCoche!=''">
-  <hr>
-
-  <div class="card">
-    <div class="card-header">
-      Admitidos en Coche
-    </div>
-    <div class="card-body">
-      {{listaAdmitidosCoche}}
-    </div>
-  </div>
-
-  <div *ngIf="listaAdmitidosBus!=''">
     <hr>
-  
+
     <div class="card">
       <div class="card-header">
-        Admitidos en Bus
+        Admitidos en Coche
       </div>
       <div class="card-body">
-        {{listaAdmitidosBus}}
+        {{listaAdmitidosCoche}}
       </div>
     </div>
-  <hr>
-</div>
 
-<div *ngIf="listaNoAdmitidosCoche!=''">
-  <div class="card">
-    <div class="card-header">
-      No Admitidos en Coche
+    <div *ngIf="listaAdmitidosBus!=''">
+      <hr>
+
+      <div class="card">
+        <div class="card-header">
+          Admitidos en Bus
+        </div>
+        <div class="card-body">
+          {{listaAdmitidosBus}}
+        </div>
+      </div>
+      <hr>
     </div>
-    <div class="card-body">
-      {{listaNoAdmitidosCoche}}
+
+    <div *ngIf="listaNoAdmitidosCoche!=''">
+      <div class="card">
+        <div class="card-header">
+          No Admitidos en Coche
+        </div>
+        <div class="card-body">
+          {{listaNoAdmitidosCoche}}
+        </div>
+      </div>
+      <hr>
     </div>
+
+    <div *ngIf="listaNoAdmitidosBus!=''">
+      <div class="card">
+        <div class="card-header">
+          No Admitidos en Bus
+        </div>
+        <div class="card-body">
+          {{listaNoAdmitidosBus}}
+        </div>
+      </div>
+      <hr>
+    </div>
+
   </div>
-<hr>
-</div>
-
-<div *ngIf="listaNoAdmitidosBus!=''">
-  <div class="card">
-    <div class="card-header">
-      No Admitidos en Bus
-    </div>
-    <div class="card-body">
-      {{listaNoAdmitidosBus}}
-    </div>
-  </div>
-<hr>
-</div>
-
-</div>
