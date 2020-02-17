@@ -26,15 +26,19 @@ export class EdicionCursoComponent implements OnInit {
   private listaAdmitidosBus: string = "";
   private listaNoAdmitidosCoche: string = "";
   private listaNoAdmitidosBus: string = "";
-  private listaAdmitidosSimple: string="";
-  private listaNoAdmitidosSimple:string="";
-  private listaAdmitidosDoble:string="";
-  private listaNoAdmitidosDoble:string="";
-  private listaAdmitidosIndiferente:string="";
-  private listaNoAdmitidosIndiferente:string="";
+  private listaAdmitidosSimple: string = "";
+  private listaNoAdmitidosSimple: string = "";
+  private listaAdmitidosDoble: string = "";
+  private listaNoAdmitidosDoble: string = "";
+  private listaAdmitidosIndiferente: string = "";
+  private listaNoAdmitidosIndiferente: string = "";
+  private listaAdmitidosCena: string = "";
+  private listaAdmitidosNoCena: string = "";
+  private listaNoAdmitidosCena: string = "";
+  private listaNoAdmitidosNoCena: string = "";
 
 
-  private tmpAsistente:asistente;
+  private tmpAsistente: asistente;
 
 
   constructor(private _cursosService: CursosService,
@@ -50,6 +54,8 @@ export class EdicionCursoComponent implements OnInit {
 
   ngOnInit() {
 
+    this.curso = new Curso(0);
+
     this.id = this._activatedRoute.snapshot.params["id"];
     this._cursosService.getCurso(this.token, this.id).subscribe(res => {
       this.curso = res;
@@ -64,8 +70,7 @@ export class EdicionCursoComponent implements OnInit {
     this.idAsistenteEditar = -1;
   }
 
-  cancelarEdicion()
-  {
+  cancelarEdicion() {
     this.asistentes[this.idAsistenteEditar] = this.tmpAsistente;
     this.idAsistenteEditar = -1;
   }
@@ -122,8 +127,7 @@ export class EdicionCursoComponent implements OnInit {
           id: a.id
         };
         this._cursosService.getAsistente(asistenteRQ).subscribe(res => {
-          if (JSON.stringify(a).toUpperCase() !== JSON.stringify(res).toUpperCase())
-          {            
+          if (JSON.stringify(a).toUpperCase() !== JSON.stringify(res).toUpperCase()) {
             this.mensajeError();
           }
         }, error => {
@@ -156,66 +160,76 @@ export class EdicionCursoComponent implements OnInit {
     this.listaAdmitidosBus = "";
     this.listaNoAdmitidosCoche = "";
     this.listaNoAdmitidosBus = "";
-    this.listaAdmitidosDoble="";
-    this.listaAdmitidosSimple="";
-    this.listaAdmitidosIndiferente="";
+    this.listaAdmitidosDoble = "";
+    this.listaAdmitidosSimple = "";
+    this.listaAdmitidosIndiferente = "";
+    this.listaAdmitidosCena = "";
+    this.listaAdmitidosNoCena = "";
+    this.listaNoAdmitidosCena = "";
+    this.listaNoAdmitidosNoCena = "";
+
     let tpmListaAdmitidos: string[] = [];
     let tmpListaAdmitidosBus: string[] = [];
     let tpmListaNoAdmitidosCoche: string[] = [];
     let tmpListaNoAdmitidosBus: string[] = [];
-    let tmplistaAdmitidosSimple:string[] = [];
-    let tmplistaAdmitidosDoble:string[] = [];
-    let tmplistaAdmitidosIndiferente:string[] = [];
-    let tmplistaNoAdmitidosSimple:string[] = [];
-    let tmplistaNoAdmitidosDoble:string[] = [];
-    let tmplistaNoAdmitidosIndiferente:string[] = [];
+    let tmplistaAdmitidosSimple: string[] = [];
+    let tmplistaAdmitidosDoble: string[] = [];
+    let tmplistaAdmitidosIndiferente: string[] = [];
+    let tmplistaNoAdmitidosSimple: string[] = [];
+    let tmplistaNoAdmitidosDoble: string[] = [];
+    let tmplistaNoAdmitidosIndiferente: string[] = [];
+    let tmpListaAdmitidosCena: string[] = [];
+    let tmpListaAdmitidosNoCena: string[] = [];
+    let tmpListaNoAdmitidosCena: string[] = [];
+    let tmpListaNoAdmitidosNoCena: string[] = [];
 
     let plaza: number = 0;
 
     this.asistentes.forEach(asistente => {
 
-      let tmpNombre:string = asistente.nombre + " " + asistente.apellidos;
+      let tmpNombre: string = asistente.nombre + " " + asistente.apellidos;
 
-      if (this.tienePlaza(plaza)) {  
-        if (asistente.transporte != undefined && asistente.transporte == "Coche")
-        {
+      if (this.tienePlaza(plaza)) {
+        if (asistente.transporte != undefined && asistente.transporte == "Coche") {
           tpmListaAdmitidos.push(tmpNombre);
         }
-        if(asistente.transporte != undefined && asistente.transporte == "Bus")
-        {
+        if (asistente.transporte != undefined && asistente.transporte == "Bus") {
           tmpListaAdmitidosBus.push(tmpNombre);
         }
-        if(asistente.habitacion != undefined && asistente.habitacion == "Simple")
-        {
+        if (asistente.habitacion != undefined && asistente.habitacion == "Simple") {
           tmplistaAdmitidosSimple.push(tmpNombre);
-        }else if(asistente.habitacion != undefined && asistente.habitacion == "Doble")
-        {
+        } else if (asistente.habitacion != undefined && asistente.habitacion == "Doble") {
           tmplistaAdmitidosDoble.push(tmpNombre);
-        }else if(asistente.habitacion != undefined && asistente.habitacion == "Indiferente")
-        {
+        } else if (asistente.habitacion != undefined && asistente.habitacion == "Indiferente") {
           tmplistaAdmitidosIndiferente.push(tmpNombre);
         }
 
-        
-      }else{
-        if (asistente.transporte != undefined && asistente.transporte == "Coche")
-        {
+        if (asistente.cena == 1) {
+          tmpListaAdmitidosCena.push(tmpNombre);
+        } else if (asistente.cena == 0) {
+          tmpListaAdmitidosNoCena.push(tmpNombre);
+        }
+
+      } else {
+        if (asistente.transporte != undefined && asistente.transporte == "Coche") {
           tpmListaNoAdmitidosCoche.push(tmpNombre);
         }
-        if(asistente.transporte != undefined && asistente.transporte == "Bus")
-        {
+        if (asistente.transporte != undefined && asistente.transporte == "Bus") {
           tmpListaNoAdmitidosBus.push(tmpNombre);
         }
 
-        if(asistente.habitacion != undefined && asistente.habitacion == "Simple")
-        {
+        if (asistente.habitacion != undefined && asistente.habitacion == "Simple") {
           tmplistaNoAdmitidosSimple.push(tmpNombre);
-        }else if(asistente.habitacion != undefined && asistente.habitacion == "Doble")
-        {
+        } else if (asistente.habitacion != undefined && asistente.habitacion == "Doble") {
           tmplistaNoAdmitidosDoble.push(tmpNombre);
-        }else if(asistente.habitacion != undefined && asistente.habitacion == "Indiferente")
-        {
+        } else if (asistente.habitacion != undefined && asistente.habitacion == "Indiferente") {
           tmplistaNoAdmitidosIndiferente.push(tmpNombre);
+        }
+
+        if (asistente.cena == 1) {
+          tmpListaNoAdmitidosCena.push(tmpNombre);
+        } else if (asistente.cena == 0) {
+          tmpListaNoAdmitidosNoCena.push(tmpNombre);
         }
 
       }
@@ -232,6 +246,10 @@ export class EdicionCursoComponent implements OnInit {
     this.listaNoAdmitidosDoble = tmplistaNoAdmitidosDoble.join(", ");
     this.listaNoAdmitidosSimple = tmplistaNoAdmitidosSimple.join(", ");
     this.listaNoAdmitidosIndiferente = tmplistaNoAdmitidosIndiferente.join(", ");
+    this.listaAdmitidosCena = tmpListaAdmitidosCena.join(", ");
+    this.listaAdmitidosNoCena = tmpListaAdmitidosNoCena.join(", ");
+    this.listaNoAdmitidosCena = tmpListaNoAdmitidosCena.join(", ");
+    this.listaNoAdmitidosNoCena = tmpListaNoAdmitidosNoCena.join(", ");
   }
 
   rellenarListaEmails() {
@@ -239,6 +257,21 @@ export class EdicionCursoComponent implements OnInit {
     let tmpEmails: string[] = [];
     this.asistentes.forEach(asistente => tmpEmails.push(asistente.email));
     this.listaEmails = tmpEmails.join(", ");
+  }
+
+
+  switchMovil() {
+    if (this.curso[0].movil == undefined)
+      this.curso[0].movil = true;
+    else
+      this.curso[0].movil = !this.curso[0].movil;
+  }
+
+  switchTransporte() {
+    if (this.curso[0].transporte == undefined)
+      this.curso[0].transporte = true;
+    else
+      this.curso[0].transporte = !this.curso[0].transporte;
   }
 
   tienePlaza(plaza: number) {

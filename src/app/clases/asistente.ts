@@ -18,4 +18,5 @@ export class asistente{
     public codigo_pais?: string;
     public movil?: string;
     public habitacion?: string;
+    public cena?:number;
 }

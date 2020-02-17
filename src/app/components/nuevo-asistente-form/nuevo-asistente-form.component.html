@@ -105,8 +105,19 @@
             </select>
           </td>
         </tr>
+        <tr>
+          <td>
+            <label>Cena:</label>
+          </td>
+          <td>
+            <select  [(ngModel)]="asistente.cena">
+              <option value=0 selected>No</option>
+              <option value=1>Sí</option>
+            </select>
+          </td>
+        </tr>
       </table>
-      <label *ngIf="mensaje" class="text-warning">{{mensaje}}</label>
+      <label *ngIf="mensaje" class="text-danger">{{mensaje}}</label>
       <button class="btn btn-primary"
         (click)="apuntarse(asistente, email.value, emailRepetido.value, dni.value, pasaporte.value)">Apuntarse
         al curso</button>

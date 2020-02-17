@@ -3,15 +3,27 @@
 
 <div class="container">
 
-  <div class="card" *ngIf="curso">
+  <div class="card" >
     <div class="card-header">
       {{curso[0].anio}}
     </div>
     <div class="card-body">
       <h5 class="card-title">{{curso[0].nombre}}</h5>
-      <p class="card-text" *ngIf="curso[0].maximos_participantes">Máximo {{ curso[0].maximos_participantes }}
-        participantes</p>
-      <p class="card-text" *ngIf="!curso[0].maximos_participantes">Sin límite de admisión</p>
+      <div class="row">
+        <div class="col">
+          <p class="card-text" *ngIf="curso[0].maximos_participantes">Máximo {{ curso[0].maximos_participantes }}
+            participantes</p>
+          <p class="card-text" *ngIf="!curso[0].maximos_participantes">Sin límite de admisión</p>
+        </div>
+        <div class="col">
+          <!-- <div *ngIf="curso[0].transporte" class="btn btn-success" (click)="switchTransporte()" >Transporte</div>
+          <div *ngIf="!curso[0].transporte" class="btn btn-outline-warning" (click)="switchTransporte()">Transporte</div> -->
+        </div>
+        <div class="col">
+          <!-- <div *ngIf="curso[0].movil" class="btn btn-success" (click)="switchMovil()" >Movil</div>
+          <div *ngIf="!curso[0].movil" class="btn btn-outline-warning" (click)="switchMovil()">Movil</div> -->
+        </div>
+      </div>
     </div>
   </div>
 
@@ -27,9 +39,10 @@
         <th scope="col">Pasaporte</th>
         <th scope="col">Socio</th>
         <th scope="col">Fecha Inscripción</th>
-        <th scope="col">Transporte</th>
-        <th scope="col">Móvil</th>
+        <th scope="col" *ngIf="curso[0].transporte" >Transporte</th>
+        <th scope="col" *ngIf="curso[0].movil" >Móvil</th>
         <th scope="col">Habitación</th>
+        <th scope="col">Cena</th>
         <th></th>
       </tr>
     </thead>
@@ -67,7 +80,9 @@
           <input type="text" [(ngModel)]="a.codigo_pais" maxlength="4" size="4" placeholder="34" pattern="[0-9]{1,4}">
           <input type="text" [(ngModel)]="a.movil" maxlength="9" size="9" pattern="[0-9]{9}">
         </td>
-        <td *ngIf="!editandoEsteAsistente(i)"><div *ngIf="a.codigo_pais && a.codigo_pais != ''">+{{a.codigo_pais + ' '}}</div>{{a.movil}}</td>
+        <td *ngIf="!editandoEsteAsistente(i)">
+          <div *ngIf="a.codigo_pais && a.codigo_pais != ''">+{{a.codigo_pais + ' '}}</div>{{a.movil}}
+        </td>
         <td *ngIf="editandoEsteAsistente(i)">
           <select [(ngModel)]="a.habitacion">
             <option value="Simple" [selected]='a.habitacion =="Simple"'>Simple</option>
@@ -76,6 +91,15 @@
           </select>
         </td>
         <td *ngIf="!editandoEsteAsistente(i)">{{a.habitacion}}</td>
+        <td *ngIf="editandoEsteAsistente(i)">
+          <select [(ngModel)]="a.cena">
+            <option value="1" [selected]="a.cena ==1">Con cena</option>
+            <option value="0" [selected]="a.cena ==0">Sin cena</option>
+          </select>
+        </td>
+        <td *ngIf="a.cena == 1 && !editandoEsteAsistente(i)">Con cena</td>
+        <td *ngIf="a.cena == 0 && !editandoEsteAsistente(i)">Sin cena</td>
+        <td *ngIf="!a.cena && !editandoEsteAsistente(i)"></td>
         <td>
           <div *ngIf="editandoRegistro()" class="btn btn-warning" (click)="irEditandoAsistente(i)">Editar</div>
           <div *ngIf="editandoEsteAsistente(i)" class="btn btn-success" (click)="guardarAsistente(a)">Guardar</div>
@@ -234,6 +258,54 @@
         </div>
         <div class="card-body">
           {{listaNoAdmitidosIndiferente}}
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <div *ngIf="listaAdmitidosCena!=''">
+      <div class="card">
+        <div class="card-header">
+          Admitidos Cena
+        </div>
+        <div class="card-body">
+          {{listaAdmitidosCena}}
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <div *ngIf="listaAdmitidosNoCena!=''">
+      <div class="card">
+        <div class="card-header">
+          Admitidos Sin Cena
+        </div>
+        <div class="card-body">
+          {{listaAdmitidosNoCena}}
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <div *ngIf="listaNoAdmitidosCena!=''">
+      <div class="card">
+        <div class="card-header">
+          No Admitidos Cena
+        </div>
+        <div class="card-body">
+          {{listaAdmitidosCena}}
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <div *ngIf="listaNoAdmitidosNoCena!=''">
+      <div class="card">
+        <div class="card-header">
+          No Admitidos Sin Cena
+        </div>
+        <div class="card-body">
+          {{listaAdmitidosNoCena}}
         </div>
       </div>
       <hr>
