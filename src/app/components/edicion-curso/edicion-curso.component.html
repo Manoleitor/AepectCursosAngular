@@ -30,6 +30,7 @@
         <th scope="col">Transporte</th>
         <th scope="col">Móvil</th>
         <th scope="col">Habitación</th>
+        <th scope="col">cena</th>
         <th></th>
       </tr>
     </thead>
@@ -76,6 +77,15 @@
           </select>
         </td>
         <td *ngIf="!editandoEsteAsistente(i)">{{a.habitacion}}</td>
+        <td *ngIf="editandoEsteAsistente(i)">
+          <select [(ngModel)]="a.cena">
+            <option value="1" [selected]="a.cena ==1">Con Cena</option>
+            <option value="0" [selected]="a.cena ==0">Sin Cena</option>
+          </select>
+        </td>
+        <td *ngIf="a.cena == 1 && !editandoEsteAsistente(i)">Con Cena</td>
+        <td *ngIf="a.cena == 0 && !editandoEsteAsistente(i)">Sin Cena</td>
+        <td *ngIf="!a.cena && !editandoEsteAsistente(i)"></td>
         <td>
           <div *ngIf="editandoRegistro()" class="btn btn-warning" (click)="irEditandoAsistente(i)">Editar</div>
           <div *ngIf="editandoEsteAsistente(i)" class="btn btn-success" (click)="guardarAsistente(a)">Guardar</div>
