@@ -3,29 +3,45 @@
 
 <div class="container">
 
-  <div class="card" >
+  <!-- <div class="card" >
     <div class="card-header">
       {{curso[0].anio}}
     </div>
     <div class="card-body">
       <h5 class="card-title">{{curso[0].nombre}}</h5>
+      <p class="card-text" *ngIf="curso[0].maximos_participantes">Máximo {{ curso[0].maximos_participantes }}
+        participantes</p>
+      <p class="card-text" *ngIf="!curso[0].maximos_participantes">Sin límite de admisión</p>
       <div class="row">
         <div class="col">
-          <p class="card-text" *ngIf="curso[0].maximos_participantes">Máximo {{ curso[0].maximos_participantes }}
-            participantes</p>
-          <p class="card-text" *ngIf="!curso[0].maximos_participantes">Sin límite de admisión</p>
+          
         </div>
         <div class="col">
-          <!-- <div *ngIf="curso[0].transporte" class="btn btn-success" (click)="switchTransporte()" >Transporte</div>
-          <div *ngIf="!curso[0].transporte" class="btn btn-outline-warning" (click)="switchTransporte()">Transporte</div> -->
+          <div *ngIf="curso[0].transporte" class="btn btn-success" (click)="switchTransporte();guardarCurso(curso[0])" >Transporte</div>
+          <div *ngIf="!curso[0].transporte" class="btn btn-outline-warning" (click)="switchTransporte();guardarCurso(curso[0])">Transporte</div>
         </div>
         <div class="col">
-          <!-- <div *ngIf="curso[0].movil" class="btn btn-success" (click)="switchMovil()" >Movil</div>
-          <div *ngIf="!curso[0].movil" class="btn btn-outline-warning" (click)="switchMovil()">Movil</div> -->
+          <div *ngIf="curso[0].movil" class="btn btn-success" (click)="switchMovil();guardarCurso(curso[0])" >Movil</div>
+          <div *ngIf="!curso[0].movil" class="btn btn-outline-warning" (click)="switchMovil();guardarCurso(curso[0])">Movil</div>
         </div>
+      
+        <div class="col">
+         
+        </div>
+        <div class="col">
+          <div *ngIf="curso[0].habitacion" class="btn btn-success" (click)="switchHabitacion();guardarCurso(curso[0])" >Habitación</div>
+          <div *ngIf="!curso[0].habitacion" class="btn btn-outline-warning" (click)="switchHabitacion();guardarCurso(curso[0])">Habitación</div>
+        </div>
+        <div class="col">
+          <div *ngIf="curso[0].cena" class="btn btn-success" (click)="switchCena();guardarCurso(curso[0])" >Cena</div>
+          <div *ngIf="!curso[0].cena" class="btn btn-outline-warning" (click)="switchCena();guardarCurso(curso[0])">Cena</div>
+        </div>
+        <div class="col">
+          
       </div>
     </div>
   </div>
+  </div> -->
 
   <hr>
 
@@ -41,8 +57,8 @@
         <th scope="col">Fecha Inscripción</th>
         <th scope="col" *ngIf="curso[0].transporte" >Transporte</th>
         <th scope="col" *ngIf="curso[0].movil" >Móvil</th>
-        <th scope="col">Habitación</th>
-        <th scope="col">Cena</th>
+        <th scope="col" *ngIf="curso[0].habitacion">Habitación</th>
+        <th scope="col" *ngIf="curso[0].cena">Cena</th>
         <th></th>
       </tr>
     </thead>
@@ -69,37 +85,42 @@
         <td *ngIf="editandoEsteAsistente(i)"> <input [(ngModel)]="a.fecha_inscripcion" value={{a.fecha_inscripcion}}
             type="datetime">
         <td *ngIf="!editandoEsteAsistente(i)">{{a.fecha_inscripcion}}</td>
-        <td *ngIf="editandoEsteAsistente(i)">
+        <!-- transporte -->
+        <td *ngIf="editandoEsteAsistente(i) && curso[0],transporte">
           <select [(ngModel)]="a.transporte">
             <option value="Coche" [selected]='a.transporte =="Coche"'>Coche</option>
             <option value="Bus" [selected]='a.transporte =="Bus"'>Bus</option>
           </select>
         </td>
-        <td *ngIf="!editandoEsteAsistente(i)">{{a.transporte}}</td>
-        <td *ngIf="editandoEsteAsistente(i)">
+        <td *ngIf="!editandoEsteAsistente(i) && curso[0].transporte">{{a.transporte}}</td>
+        <!-- Movil -->
+        <td *ngIf="editandoEsteAsistente(i) && curso[0].movil">
           <input type="text" [(ngModel)]="a.codigo_pais" maxlength="4" size="4" placeholder="34" pattern="[0-9]{1,4}">
           <input type="text" [(ngModel)]="a.movil" maxlength="9" size="9" pattern="[0-9]{9}">
         </td>
-        <td *ngIf="!editandoEsteAsistente(i)">
+        <td *ngIf="!editandoEsteAsistente(i) && curso[0].movil">
           <div *ngIf="a.codigo_pais && a.codigo_pais != ''">+{{a.codigo_pais + ' '}}</div>{{a.movil}}
         </td>
-        <td *ngIf="editandoEsteAsistente(i)">
+        <!-- Habitación -->
+        <td *ngIf="editandoEsteAsistente(i) && curso[0].habitacion">
           <select [(ngModel)]="a.habitacion">
             <option value="Simple" [selected]='a.habitacion =="Simple"'>Simple</option>
             <option value="Doble" [selected]='a.habitacion =="Doble"'>Doble</option>
             <option value="Indiferente" [selected]='a.habitacion =="Indiferente"'>Indiferente</option>
           </select>
         </td>
-        <td *ngIf="!editandoEsteAsistente(i)">{{a.habitacion}}</td>
-        <td *ngIf="editandoEsteAsistente(i)">
+        <td *ngIf="!editandoEsteAsistente(i) && curso[0].habitacion">{{a.habitacion}}</td>
+        <!-- Cena -->
+        <td *ngIf="editandoEsteAsistente(i) && curso[0].cena">
           <select [(ngModel)]="a.cena">
             <option value="1" [selected]="a.cena ==1">Con cena</option>
             <option value="0" [selected]="a.cena ==0">Sin cena</option>
           </select>
         </td>
-        <td *ngIf="a.cena == 1 && !editandoEsteAsistente(i)">Con cena</td>
-        <td *ngIf="a.cena == 0 && !editandoEsteAsistente(i)">Sin cena</td>
-        <td *ngIf="!a.cena && !editandoEsteAsistente(i)"></td>
+        <td *ngIf="a.cena == 1 && !editandoEsteAsistente(i) && curso[0].cena">Con cena</td>
+        <td *ngIf="a.cena == 0 && !editandoEsteAsistente(i) && curso[0].cena">Sin cena</td>
+        <td *ngIf="!a.cena && !editandoEsteAsistente(i) && curso[0].cena"></td>
+        <!-- botones -->
         <td>
           <div *ngIf="editandoRegistro()" class="btn btn-warning" (click)="irEditandoAsistente(i)">Editar</div>
           <div *ngIf="editandoEsteAsistente(i)" class="btn btn-success" (click)="guardarAsistente(a)">Guardar</div>

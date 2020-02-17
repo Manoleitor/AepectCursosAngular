@@ -2,10 +2,6 @@ import { asistente } from "./asistente";
 
 export class Curso{
 
-    constructor(id:number)
-    {
-        this.id = id;
-    }
     public id?: number;
     public nombre: string;
     public anio: string;

@@ -8,6 +8,7 @@ import "snapsvg-cjs";
 import { getAsistenteRQ } from 'src/app/clases/getAsistenteRQ';
 import { updateAsistenteRQ } from 'src/app/clases/updateAsistenteRQ';
 import { deleteAsistenteRQ } from 'src/app/clases/deleteAsistenteRQ';
+import { updateCursoRQ } from 'src/app/clases/updateCursoRQ';
 
 @Component({
   selector: 'app-edicion-curso',
@@ -54,11 +55,12 @@ export class EdicionCursoComponent implements OnInit {
 
   ngOnInit() {
 
-    this.curso = new Curso(0);
+    
 
     this.id = this._activatedRoute.snapshot.params["id"];
     this._cursosService.getCurso(this.token, this.id).subscribe(res => {
       this.curso = res;
+      console.log(res);
       if (this.curso.asistentes != undefined) {
         this.asistentes = this.curso.asistentes;
         this.rellenarListaEmails();
@@ -141,6 +143,48 @@ export class EdicionCursoComponent implements OnInit {
       this.mensajeError();
     }
     );
+  }
+
+  guardarCurso(curso:Curso)
+  {
+    const RQ: updateCursoRQ={
+      id:curso.id,
+      token: this.token,
+      nombre: curso.nombre,
+      anio:curso.anio,
+      maximos_participantes: curso.maximos_participantes,
+      fecha_creacion:curso.fecha_creacion,
+      transporte:curso.transporte,
+      movil:curso.movil,
+      habitacion:curso.habitacion,
+      cena:curso.cena
+    };
+
+    this._cursosService.updateCurso(RQ).subscribe(res=>{
+      if(res.error=="Exito")
+      {
+        console.log("guardado");
+        this._cursosService.getCurso(this.token, this.id).subscribe(resCurso => {
+          console.log("obtenido curso");
+
+          if(JSON.stringify(resCurso[0]).toUpperCase() != JSON.stringify(this.curso[0]).toUpperCase()){
+
+            this.mensajeError();
+          }else{
+            console.log("bien");
+          }
+            
+        });
+
+      }else{
+        console.error(res.error);
+        this.mensajeError();
+      }
+    },error=>{
+      console.log(error);
+      this.mensajeError();
+    });
+
   }
 
   irEditandoAsistente(id: number) {
@@ -259,6 +303,19 @@ export class EdicionCursoComponent implements OnInit {
     this.listaEmails = tmpEmails.join(", ");
   }
 
+  switchCena() {
+    if (this.curso[0].cena == undefined)
+      this.curso[0].cena = true;
+    else
+      this.curso[0].cena = !this.curso[0].cena;
+  }
+
+  switchHabitacion() {
+    if (this.curso[0].habitacion == undefined)
+      this.curso[0].habitacion = true;
+    else
+      this.curso[0].habitacion = !this.curso[0].habitacion;
+  }
 
   switchMovil() {
     if (this.curso[0].movil == undefined)

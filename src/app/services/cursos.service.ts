@@ -2,8 +2,8 @@ import { asistente } from './../clases/asistente';
 import { createAsistenteRS } from './../clases/createAsistenteRS';
 import { createAsistenteRQ } from './../clases/createAsistenteRQ';
 import { Injectable } from '@angular/core';
-import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+
 import { Curso } from '../clases/curso';
 import { Observable, of, from } from 'rxjs';
 import { listaCursosRS } from '../clases/listaCursosRS';
@@ -17,12 +17,24 @@ import { updateAsistenteRQ } from '../clases/updateAsistenteRQ';
 import { updateAsistenteRS } from '../clases/updateAsistenteRS';
 import { deleteAsistenteRQ } from '../clases/deleteAsistenteRQ';
 import { deleteAsistenteRS } from '../clases/deleteAsistenteRS';
+import { updateCursoRS } from '../clases/updateCursoRS';
+import { updateCursoRQ } from '../clases/updateCursoRQ';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CursosService {
+
+//   private httpOptions = {
+//     headers: new HttpHeaders({
+//         'Content-Type': 'application/json',
+//         'Access-Control-Allow-Origin': '*',
+//         'Access-Control-Allow-Credentials': 'true',
+//         'Access-Control-Allow-Headers': 'Content-Type',
+//         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+//     })
+// };
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -71,6 +83,16 @@ export class CursosService {
     }));
   }
 
+  public updateCurso(RQ:updateCursoRQ):Observable<updateCursoRS>{
+    return this._httpClient.post('AepectApiRest/cursos/updateCurso.php',
+    {
+      RQ
+    }).pipe(map((res: updateCursoRS) =>{
+      return res;
+    }));
+  }
+
+
   public postAsistente(RQ:createAsistenteRQ):Observable<createAsistenteRS>{
     return this._httpClient.post('AepectApiRest/asistentes/createAsistente.php',
     {
@@ -84,7 +106,7 @@ export class CursosService {
     return this._httpClient.post('AepectApiRest/asistentes/updateAsistente.php',
     {
       RQ
-    }).pipe(map((res: createAsistenteRS) =>{
+    }).pipe(map((res: updateAsistenteRS) =>{
       return res;
     }));
   }
