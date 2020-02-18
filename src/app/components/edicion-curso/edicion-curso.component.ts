@@ -55,8 +55,6 @@ export class EdicionCursoComponent implements OnInit {
 
   ngOnInit() {
 
-    
-
     this.id = this._activatedRoute.snapshot.params["id"];
     this._cursosService.getCurso(this.token, this.id).subscribe(res => {
       this.curso = res;
@@ -145,46 +143,35 @@ export class EdicionCursoComponent implements OnInit {
     );
   }
 
-  guardarCurso(curso:Curso)
-  {
-    const RQ: updateCursoRQ={
-      id:curso.id,
+  guardarCurso(curso: Curso) {
+    const RQ: updateCursoRQ = {
+      id: curso.id,
       token: this.token,
       nombre: curso.nombre,
-      anio:curso.anio,
+      anio: curso.anio,
       maximos_participantes: curso.maximos_participantes,
-      fecha_creacion:curso.fecha_creacion,
-      transporte:curso.transporte,
-      movil:curso.movil,
-      habitacion:curso.habitacion,
-      cena:curso.cena
+      fecha_creacion: curso.fecha_creacion,
+      transporte: curso.transporte,
+      movil: curso.movil,
+      habitacion: curso.habitacion,
+      cena: curso.cena
     };
 
-    this._cursosService.updateCurso(RQ).subscribe(res=>{
-      if(res.error=="Exito")
-      {
-        console.log("guardado");
+    this._cursosService.updateCurso(RQ).subscribe(res => {
+      if (res.error == "Exito") {
         this._cursosService.getCurso(this.token, this.id).subscribe(resCurso => {
-          console.log("obtenido curso");
-
-          if(JSON.stringify(resCurso[0]).toUpperCase() != JSON.stringify(this.curso[0]).toUpperCase()){
-
+          if (JSON.stringify(resCurso[0]).toUpperCase() != JSON.stringify(this.curso[0]).toUpperCase()) {
             this.mensajeError();
-          }else{
-            console.log("bien");
           }
-            
         });
-
-      }else{
+      } else {
         console.error(res.error);
         this.mensajeError();
       }
-    },error=>{
+    }, error => {
       console.log(error);
       this.mensajeError();
     });
-
   }
 
   irEditandoAsistente(id: number) {
@@ -305,30 +292,30 @@ export class EdicionCursoComponent implements OnInit {
 
   switchCena() {
     if (this.curso[0].cena == undefined)
-      this.curso[0].cena = true;
+      this.curso[0].cena = "1";
     else
-      this.curso[0].cena = !this.curso[0].cena;
+      this.curso[0].cena = this.curso[0].cena == "0" ? "1" : "0";
   }
 
   switchHabitacion() {
     if (this.curso[0].habitacion == undefined)
-      this.curso[0].habitacion = true;
+      this.curso[0].habitacion = "1";
     else
-      this.curso[0].habitacion = !this.curso[0].habitacion;
+      this.curso[0].habitacion = this.curso[0].habitacion == "0" ? "1" : "0";
   }
 
   switchMovil() {
     if (this.curso[0].movil == undefined)
-      this.curso[0].movil = true;
+      this.curso[0].movil = "1";
     else
-      this.curso[0].movil = !this.curso[0].movil;
+      this.curso[0].movil = this.curso[0].movil == "0" ? "1" : "0";
   }
 
   switchTransporte() {
     if (this.curso[0].transporte == undefined)
-      this.curso[0].transporte = true;
+      this.curso[0].transporte = "1";
     else
-      this.curso[0].transporte = !this.curso[0].transporte;
+      this.curso[0].transporte = this.curso[0].transporte == "0" ? "1" : "0";
   }
 
   tienePlaza(plaza: number) {

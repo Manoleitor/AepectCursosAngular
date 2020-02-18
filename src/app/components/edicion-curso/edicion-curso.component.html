@@ -1,9 +1,9 @@
 <app-nav-bar-ponente></app-nav-bar-ponente>
 <br />
 
-<div class="container">
+<div class="container " *ngIf="curso!=undefined">
 
-  <!-- <div class="card" >
+  <div class="card" >
     <div class="card-header">
       {{curso[0].anio}}
     </div>
@@ -12,36 +12,36 @@
       <p class="card-text" *ngIf="curso[0].maximos_participantes">Máximo {{ curso[0].maximos_participantes }}
         participantes</p>
       <p class="card-text" *ngIf="!curso[0].maximos_participantes">Sin límite de admisión</p>
-      <div class="row">
+      <div class="row" >
         <div class="col">
           
         </div>
         <div class="col">
-          <div *ngIf="curso[0].transporte" class="btn btn-success" (click)="switchTransporte();guardarCurso(curso[0])" >Transporte</div>
-          <div *ngIf="!curso[0].transporte" class="btn btn-outline-warning" (click)="switchTransporte();guardarCurso(curso[0])">Transporte</div>
+          <div *ngIf="curso[0].transporte && curso[0].transporte ==1" class="btn btn-success" (click)="switchTransporte();guardarCurso(curso[0])" >Transporte</div>
+          <div *ngIf="curso[0].transporte && curso[0].transporte ==0" class="btn btn-outline-warning" (click)="switchTransporte();guardarCurso(curso[0])">Transporte</div>
         </div>
         <div class="col">
-          <div *ngIf="curso[0].movil" class="btn btn-success" (click)="switchMovil();guardarCurso(curso[0])" >Movil</div>
-          <div *ngIf="!curso[0].movil" class="btn btn-outline-warning" (click)="switchMovil();guardarCurso(curso[0])">Movil</div>
+          <div *ngIf="curso[0].movil && curso[0].movil ==1" class="btn btn-success" (click)="switchMovil();guardarCurso(curso[0])" >Movil</div>
+          <div *ngIf="curso[0].movil && curso[0].movil ==0" class="btn btn-outline-warning" (click)="switchMovil();guardarCurso(curso[0])">Movil</div>
         </div>
       
         <div class="col">
          
         </div>
         <div class="col">
-          <div *ngIf="curso[0].habitacion" class="btn btn-success" (click)="switchHabitacion();guardarCurso(curso[0])" >Habitación</div>
-          <div *ngIf="!curso[0].habitacion" class="btn btn-outline-warning" (click)="switchHabitacion();guardarCurso(curso[0])">Habitación</div>
+          <div *ngIf="curso[0].habitacion && curso[0].habitacion == 1" class="btn btn-success" (click)="switchHabitacion();guardarCurso(curso[0])" >Habitación</div>
+          <div *ngIf="curso[0].habitacion && curso[0].habitacion == 0" class="btn btn-outline-warning" (click)="switchHabitacion();guardarCurso(curso[0])">Habitación</div>
         </div>
         <div class="col">
-          <div *ngIf="curso[0].cena" class="btn btn-success" (click)="switchCena();guardarCurso(curso[0])" >Cena</div>
-          <div *ngIf="!curso[0].cena" class="btn btn-outline-warning" (click)="switchCena();guardarCurso(curso[0])">Cena</div>
+          <div *ngIf="curso[0].cena && curso[0].cena == 1" class="btn btn-success" (click)="switchCena();guardarCurso(curso[0])" >Cena</div>
+          <div *ngIf="curso[0].cena && curso[0].cena == 0" class="btn btn-outline-warning" (click)="switchCena();guardarCurso(curso[0])">Cena</div>
         </div>
         <div class="col">
           
       </div>
     </div>
   </div>
-  </div> -->
+  </div>
 
   <hr>
 

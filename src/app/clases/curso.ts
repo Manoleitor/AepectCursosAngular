@@ -8,9 +8,9 @@ export class Curso{
     public maximos_participantes?: number;
     public fecha_creacion?: Date;
     public asistentes?: Array<asistente>;
-    public movil?:boolean;
-    public transporte?:boolean;
-    public habitacion?:boolean;
-    public cena?:boolean;
+    public movil?:number;
+    public transporte?:number;
+    public habitacion?:number;
+    public cena?:number;
   
 }
