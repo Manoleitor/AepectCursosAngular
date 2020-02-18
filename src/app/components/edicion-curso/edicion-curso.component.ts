@@ -39,6 +39,7 @@ export class EdicionCursoComponent implements OnInit {
   private listaNoAdmitidosNoCena: string = "";
   private editandoAnio:boolean = false;
   private editandoNombre:boolean = false;
+  private editandoNParticipantes:boolean = false;
 
 
   private tmpAsistente: asistente;
@@ -92,6 +93,11 @@ export class EdicionCursoComponent implements OnInit {
   changeEditarNombre()
   {
     this.editandoNombre = !this.editandoNombre;
+  }
+
+  changeEditarNParticipantes()
+  {
+    this.editandoNParticipantes = !this.editandoNParticipantes;
   }
 
   changeHabitacion() {
@@ -196,6 +202,8 @@ export class EdicionCursoComponent implements OnInit {
       habitacion: curso.habitacion,
       cena: curso.cena
     };
+
+    console.log(curso);
 
     this._cursosService.updateCurso(RQ).subscribe(res => {
       if (res.error == "Exito") {
@@ -333,7 +341,7 @@ export class EdicionCursoComponent implements OnInit {
   
 
   tienePlaza(plaza: number) {
-    if (this.curso[0].maximos_participantes != undefined) {
+    if (this.curso[0].maximos_participantes != undefined && this.curso[0].maximos_participantes > 0) {
       return this.curso[0].maximos_participantes > plaza ? true : false;
     }
     return true; // si no hay numero fijo máximo de plazas devolver siempre verdadero
