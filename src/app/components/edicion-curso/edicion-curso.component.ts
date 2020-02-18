@@ -37,6 +37,8 @@ export class EdicionCursoComponent implements OnInit {
   private listaAdmitidosNoCena: string = "";
   private listaNoAdmitidosCena: string = "";
   private listaNoAdmitidosNoCena: string = "";
+  private editandoAnio:boolean = false;
+  private editandoNombre:boolean = false;
 
 
   private tmpAsistente: asistente;
@@ -73,6 +75,44 @@ export class EdicionCursoComponent implements OnInit {
   cancelarEdicion() {
     this.asistentes[this.idAsistenteEditar] = this.tmpAsistente;
     this.idAsistenteEditar = -1;
+  }
+
+  changeCena() {
+    if (this.curso[0].cena == undefined)
+      this.curso[0].cena = "1";
+    else
+      this.curso[0].cena = this.curso[0].cena == "0" ? "1" : "0";
+  }
+
+  changeEditarAnio()
+  {
+    this.editandoAnio = !this.editandoAnio;
+  }
+
+  changeEditarNombre()
+  {
+    this.editandoNombre = !this.editandoNombre;
+  }
+
+  changeHabitacion() {
+    if (this.curso[0].habitacion == undefined)
+      this.curso[0].habitacion = "1";
+    else
+      this.curso[0].habitacion = this.curso[0].habitacion == "0" ? "1" : "0";
+  }
+
+  changeMovil() {
+    if (this.curso[0].movil == undefined)
+      this.curso[0].movil = "1";
+    else
+      this.curso[0].movil = this.curso[0].movil == "0" ? "1" : "0";
+  }
+
+  changeTransporte() {
+    if (this.curso[0].transporte == undefined)
+      this.curso[0].transporte = "1";
+    else
+      this.curso[0].transporte = this.curso[0].transporte == "0" ? "1" : "0";
   }
 
   editandoEsteAsistente(id: number) {
@@ -290,33 +330,7 @@ export class EdicionCursoComponent implements OnInit {
     this.listaEmails = tmpEmails.join(", ");
   }
 
-  switchCena() {
-    if (this.curso[0].cena == undefined)
-      this.curso[0].cena = "1";
-    else
-      this.curso[0].cena = this.curso[0].cena == "0" ? "1" : "0";
-  }
-
-  switchHabitacion() {
-    if (this.curso[0].habitacion == undefined)
-      this.curso[0].habitacion = "1";
-    else
-      this.curso[0].habitacion = this.curso[0].habitacion == "0" ? "1" : "0";
-  }
-
-  switchMovil() {
-    if (this.curso[0].movil == undefined)
-      this.curso[0].movil = "1";
-    else
-      this.curso[0].movil = this.curso[0].movil == "0" ? "1" : "0";
-  }
-
-  switchTransporte() {
-    if (this.curso[0].transporte == undefined)
-      this.curso[0].transporte = "1";
-    else
-      this.curso[0].transporte = this.curso[0].transporte == "0" ? "1" : "0";
-  }
+  
 
   tienePlaza(plaza: number) {
     if (this.curso[0].maximos_participantes != undefined) {
