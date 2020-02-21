@@ -1,58 +1,73 @@
 <app-nav-bar-ponente></app-nav-bar-ponente>
 <br />
 
-<div class="container " *ngIf="curso!=undefined">
 
-  <div class="card" >
-    <div class="card-header" *ngIf="!editandoAnio" (dblclick)="changeEditarAnio()" >
-      {{curso[0].anio}}
+
+<div class="container " *ngIf="curso!=undefined && id>0">
+
+  <div class="card">
+    <div class="card-header" *ngIf="!editandoAnio" (dblclick)="changeEditarAnio()">
+      {{curso.anio}}
     </div>
     <div class="card-header" *ngIf="editandoAnio">
-      <input type="text" [(ngModel)]="curso[0].anio" maxlength="4" size="4" pattern="[0-9]{4}" value="{{curso[0].anio}}" (keydown.enter)="changeEditarAnio();guardarCurso(curso[0]) ">
+      <input type="text" [(ngModel)]="curso.anio" maxlength="4" size="4" pattern="[0-9]{4}" value="{{curso.anio}}"
+        (keydown.enter)="changeEditarAnio();guardarCurso(curso) ">
     </div>
     <div class="card-body">
-      <h5 class="card-title" *ngIf="!editandoNombre" (dblclick)="changeEditarNombre()" >{{curso[0].nombre}}</h5>
+      <h5 class="card-title" *ngIf="!editandoNombre" (dblclick)="changeEditarNombre()">{{curso.nombre}}</h5>
       <div *ngIf="editandoNombre">
-        <input type="text" [(ngModel)]="curso[0].nombre" size="100" value="{{curso[0].Nombre}}" (keydown.enter)="changeEditarNombre();guardarCurso(curso[0]) ">
+        <input type="text" [(ngModel)]="curso.nombre" size="100" value="{{curso.Nombre}}"
+          (keydown.enter)="changeEditarNombre();guardarCurso(curso) ">
       </div>
       <div *ngIf="!editandoNParticipantes" (dblclick)="changeEditarNParticipantes()">
-        <p class="card-text" *ngIf="curso[0].maximos_participantes > 0">Máximo {{ curso[0].maximos_participantes }}
+        <p class="card-text" *ngIf="curso.maximos_participantes > 0">Máximo {{ curso.maximos_participantes }}
           participantes</p>
-        <p class="card-text" *ngIf="!curso[0].maximos_participantes || curso[0].maximos_participantes == 0">Sin límite de admisión</p>
+        <p class="card-text" *ngIf="!curso.maximos_participantes || curso.maximos_participantes == 0">Sin límite
+          de admisión</p>
       </div>
-      <div *ngIf="editandoNParticipantes" >
-        Número de Participantes: <input  type="text" [(ngModel)]="curso[0].maximos_participantes" maxlength="4" size="4" pattern="[0-9]{0,4}" value="{{curso[0].maximos_participantes}}" (keydown.enter)="changeEditarNParticipantes();guardarCurso(curso[0]) ">
+      <div *ngIf="editandoNParticipantes">
+        Número de Participantes: <input type="text" [(ngModel)]="curso.maximos_participantes" maxlength="4" size="4"
+          pattern="[0-9]{0,4}" value="{{curso.maximos_participantes}}"
+          (keydown.enter)="changeEditarNParticipantes();guardarCurso(curso) ">
       </div>
       <br>
-      <div class="row" >
+      <div class="row">
         <div class="col">
-          
+
         </div>
         <div class="col">
-          <div *ngIf="curso[0].transporte && curso[0].transporte ==1" class="btn btn-success" (click)="changeTransporte();guardarCurso(curso[0])" >Transporte</div>
-          <div *ngIf="curso[0].transporte && curso[0].transporte ==0" class="btn btn-outline-warning" (click)="changeTransporte();guardarCurso(curso[0])">Transporte</div>
+          <div *ngIf="curso.transporte && curso.transporte ==1" class="btn btn-success"
+            (click)="changeTransporte();guardarCurso(curso)">Transporte</div>
+          <div *ngIf="!curso.transporte || curso.transporte ==0" class="btn btn-outline-warning"
+            (click)="changeTransporte();guardarCurso(curso)">Transporte</div>
         </div>
         <div class="col">
-          <div *ngIf="curso[0].movil && curso[0].movil ==1" class="btn btn-success" (click)="changeMovil();guardarCurso(curso[0])" >Movil</div>
-          <div *ngIf="curso[0].movil && curso[0].movil ==0" class="btn btn-outline-warning" (click)="changeMovil();guardarCurso(curso[0])">Movil</div>
+          <div *ngIf="curso.movil && curso.movil ==1" class="btn btn-success"
+            (click)="changeMovil();guardarCurso(curso)">Movil</div>
+          <div *ngIf="!curso.movil || curso.movil ==0" class="btn btn-outline-warning"
+            (click)="changeMovil();guardarCurso(curso)">Movil</div>
         </div>
-      
+
         <div class="col">
-         
-        </div>
-        <div class="col">
-          <div *ngIf="curso[0].habitacion && curso[0].habitacion == 1" class="btn btn-success" (click)="changeHabitacion();guardarCurso(curso[0])" >Habitación</div>
-          <div *ngIf="curso[0].habitacion && curso[0].habitacion == 0" class="btn btn-outline-warning" (click)="changeHabitacion();guardarCurso(curso[0])">Habitación</div>
+
         </div>
         <div class="col">
-          <div *ngIf="curso[0].cena && curso[0].cena == 1" class="btn btn-success" (click)="changeCena();guardarCurso(curso[0])" >Cena</div>
-          <div *ngIf="curso[0].cena && curso[0].cena == 0" class="btn btn-outline-warning" (click)="changeCena();guardarCurso(curso[0])">Cena</div>
+          <div *ngIf="curso.habitacion && curso.habitacion == 1" class="btn btn-success"
+            (click)="changeHabitacion();guardarCurso(curso)">Habitación</div>
+          <div *ngIf="!curso.habitacion || curso.habitacion == 0" class="btn btn-outline-warning"
+            (click)="changeHabitacion();guardarCurso(curso)">Habitación</div>
         </div>
         <div class="col">
-          
+          <div *ngIf="curso.cena && curso.cena == 1" class="btn btn-success"
+            (click)="changeCena();guardarCurso(curso)">Cena</div>
+          <div *ngIf="!curso.cena || curso.cena == 0" class="btn btn-outline-warning"
+            (click)="changeCena();guardarCurso(curso)">Cena</div>
+        </div>
+        <div class="col">
+
+        </div>
       </div>
     </div>
-  </div>
   </div>
 
   <hr>
@@ -67,10 +82,10 @@
         <th scope="col">Pasaporte</th>
         <th scope="col">Socio</th>
         <th scope="col">Fecha Inscripción</th>
-        <th scope="col" *ngIf="curso[0].transporte" >Transporte</th>
-        <th scope="col" *ngIf="curso[0].movil" >Móvil</th>
-        <th scope="col" *ngIf="curso[0].habitacion">Habitación</th>
-        <th scope="col" *ngIf="curso[0].cena">Cena</th>
+        <th scope="col" *ngIf="curso.transporte == 1">Transporte</th>
+        <th scope="col" *ngIf="curso.movil == 1">Móvil</th>
+        <th scope="col" *ngIf="curso.habitacion == 1">Habitación</th>
+        <th scope="col" *ngIf="curso.cena == 1">Cena</th>
         <th></th>
       </tr>
     </thead>
@@ -98,40 +113,40 @@
             type="datetime">
         <td *ngIf="!editandoEsteAsistente(i)">{{a.fecha_inscripcion}}</td>
         <!-- transporte -->
-        <td *ngIf="editandoEsteAsistente(i) && curso[0],transporte">
+        <td *ngIf="editandoEsteAsistente(i) && curso.transporte==1">
           <select [(ngModel)]="a.transporte">
             <option value="Coche" [selected]='a.transporte =="Coche"'>Coche</option>
             <option value="Bus" [selected]='a.transporte =="Bus"'>Bus</option>
           </select>
         </td>
-        <td *ngIf="!editandoEsteAsistente(i) && curso[0].transporte">{{a.transporte}}</td>
+        <td *ngIf="!editandoEsteAsistente(i) && curso.transporte == 1">{{a.transporte}}</td>
         <!-- Movil -->
-        <td *ngIf="editandoEsteAsistente(i) && curso[0].movil">
+        <td *ngIf="editandoEsteAsistente(i) && curso.movil ==1">
           <input type="text" [(ngModel)]="a.codigo_pais" maxlength="4" size="4" placeholder="34" pattern="[0-9]{1,4}">
           <input type="text" [(ngModel)]="a.movil" maxlength="9" size="9" pattern="[0-9]{9}">
         </td>
-        <td *ngIf="!editandoEsteAsistente(i) && curso[0].movil">
+        <td *ngIf="!editandoEsteAsistente(i) && curso.movil == 1">
           <div *ngIf="a.codigo_pais && a.codigo_pais != ''">+{{a.codigo_pais + ' '}}</div>{{a.movil}}
         </td>
         <!-- Habitación -->
-        <td *ngIf="editandoEsteAsistente(i) && curso[0].habitacion">
+        <td *ngIf="editandoEsteAsistente(i) && curso.habitacion == 1">
           <select [(ngModel)]="a.habitacion">
             <option value="Simple" [selected]='a.habitacion =="Simple"'>Simple</option>
             <option value="Doble" [selected]='a.habitacion =="Doble"'>Doble</option>
             <option value="Indiferente" [selected]='a.habitacion =="Indiferente"'>Indiferente</option>
           </select>
         </td>
-        <td *ngIf="!editandoEsteAsistente(i) && curso[0].habitacion">{{a.habitacion}}</td>
+        <td *ngIf="!editandoEsteAsistente(i) && curso.habitacion">{{a.habitacion}}</td>
         <!-- Cena -->
-        <td *ngIf="editandoEsteAsistente(i) && curso[0].cena">
+        <td *ngIf="editandoEsteAsistente(i) && curso.cena == 1">
           <select [(ngModel)]="a.cena">
             <option value="1" [selected]="a.cena ==1">Con cena</option>
             <option value="0" [selected]="a.cena ==0">Sin cena</option>
           </select>
         </td>
-        <td *ngIf="a.cena == 1 && !editandoEsteAsistente(i) && curso[0].cena">Con cena</td>
-        <td *ngIf="a.cena == 0 && !editandoEsteAsistente(i) && curso[0].cena">Sin cena</td>
-        <td *ngIf="!a.cena && !editandoEsteAsistente(i) && curso[0].cena"></td>
+        <td *ngIf="a.cena == 1 && !editandoEsteAsistente(i) && curso.cena == 1">Con cena</td>
+        <td *ngIf="a.cena == 0 && !editandoEsteAsistente(i) && curso.cena == 1">Sin cena</td>
+        <td *ngIf="!a.cena && !editandoEsteAsistente(i) && curso.cena"></td>
         <!-- botones -->
         <td>
           <div *ngIf="editandoRegistro()" class="btn btn-warning" (click)="irEditandoAsistente(i)">Editar</div>

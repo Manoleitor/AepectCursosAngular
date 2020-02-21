@@ -11,15 +11,16 @@ import { Router } from '@angular/router';
 })
 export class EntradaComponent implements OnInit {
 
-  private cursos: Array<Curso>;
+  public cursos: Array<Curso>;
 
   constructor(private _CursosService : CursosService,
     private _loginService: LoginService,
     private _router:Router) { }
 
   ngOnInit() {
-    this._CursosService.getCursosListEntrada().subscribe(res=>{
+    this._CursosService.getCursosListEntrada().subscribe(res=>{      
       this.cursos = res;
+      // console.log(this.cursos);
     });
   }
 

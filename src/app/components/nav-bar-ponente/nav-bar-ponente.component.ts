@@ -30,6 +30,10 @@ export class NavBarPonenteComponent implements OnInit {
     this.goHome();
   }
 
+  irNuevoCurso(){
+    this._router.navigate(['nuevo-curso']);
+  }
+
   private goHome()
   {
     this._location.replaceState('/');

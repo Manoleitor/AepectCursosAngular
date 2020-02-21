@@ -15,6 +15,7 @@ import { NavBarPonenteComponent } from './components/nav-bar-ponente/nav-bar-pon
 import { EdicionCursoComponent } from './components/edicion-curso/edicion-curso.component';
 import { NuevoAsistenteFormComponent } from './components/nuevo-asistente-form/nuevo-asistente-form.component';
 import { InterceptorService } from './services/interceptor.service';
+import { NuevoCursoComponent } from './components/nuevo-curso/nuevo-curso.component';
 
 
 
@@ -26,7 +27,9 @@ import { InterceptorService } from './services/interceptor.service';
     HomePonenteComponent,
     NavBarPonenteComponent,
     EdicionCursoComponent,
-    NuevoAsistenteFormComponent
+    NuevoAsistenteFormComponent,
+    NuevoCursoComponent
+
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,74 @@
+<app-nav-bar-ponente></app-nav-bar-ponente>
+<br />
+
+
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-2">
+          AÑO:
+        </div>
+        <div class="col-10">
+          <input type="text" [(ngModel)]="curso.anio" maxlength="4" size="4" pattern="[0-9]{4}" required>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-2">
+          NOMBRE:
+        </div>
+        <div class="col-10">
+          <input type="text" [(ngModel)]="curso.nombre" size="100" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">ASISTENTES:</div>
+        <div class="col-10"><input type="text" [(ngModel)]="curso.maximos_participantes" maxlength="4" size="4" pattern="[0-9]{0,4}"></div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+          <div *ngIf="curso.transporte ==1" class="btn btn-success" (click)="changeTransporte()">
+            Transporte</div>
+          <div *ngIf="curso.transporte ==0" class="btn btn-outline-warning"
+            (click)="changeTransporte()">Transporte</div>
+        </div>
+        <div class="col">
+          <div *ngIf="curso.movil ==1" class="btn btn-success" (click)="changeMovil()">Movil</div>
+          <div *ngIf="curso.movil ==0" class="btn btn-outline-warning" (click)="changeMovil()">Movil
+          </div>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+          <div *ngIf="curso.habitacion == 1" class="btn btn-success" (click)="changeHabitacion()">
+            Habitación</div>
+          <div *ngIf="curso.habitacion == 0" class="btn btn-outline-warning"
+            (click)="changeHabitacion()">Habitación</div>
+        </div>
+        <div class="col">
+          <div *ngIf="curso.cena == 1" class="btn btn-success" (click)="changeCena()">Cena</div>
+          <div *ngIf="curso.cena == 0" class="btn btn-outline-warning" (click)="changeCena()">Cena</div>
+        </div>
+        <div class="col">
+
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+          <div class="btn btn-primary" (click)="crearNuevoCurso(curso)">GUARDAR</div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

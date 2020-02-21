@@ -4,11 +4,11 @@
 
 
 
-<div id="container" style="width: 70%; padding: 30px; margin: auto;">
+<div id="container" style="width: 70%; padding: 30px; margin: auto;" *ngIf="curso">
   <div class="card text-center" style="margin: 10px" *ngIf="!mostrarMensajeExito && !mostrarMensajeFrasaco">
     <div class="card-header">
       {{anio}}
-      <div class="btn btn-warning" (click)="rellenarDatosPrueba()">Rellenar</div>
+      <div *ngIf="esModoDesarrollo()" class="btn btn-warning" (click)="rellenarDatosPrueba()">Rellenar</div>
     </div>
     <div class="card-body">
       <h5 class="card-title">{{nombreCurso}}</h5>
@@ -54,7 +54,7 @@
             <input type="text" [(ngModel)]="asistente.dni" #dni placeholder="8 dígitos con letra" maxlength="9" pattern="[0-9]{8}[A-Za-z]">
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="curso.movil==1">
           <td>
             <label>Móvil</label>
           </td>
@@ -82,7 +82,7 @@
             </select>
           </td>
         </tr>
-        <tr *ngIf="mostrarTransporte">
+        <tr *ngIf="curso.transporte==1">
           <td>
             <label>Transporte:</label>
           </td>
@@ -93,7 +93,7 @@
             </select>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="curso.habitacion==1">
           <td>
             <label>Habitación:</label>
           </td>
@@ -105,7 +105,7 @@
             </select>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="curso.cena==1">
           <td>
             <label>Cena:</label>
           </td>

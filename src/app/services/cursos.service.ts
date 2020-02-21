@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { Curso } from '../clases/curso';
+import { getFromualrioCursoRS } from '../clases/getFormularioCursoRS';
 import { Observable, of, from } from 'rxjs';
 import { listaCursosRS } from '../clases/listaCursosRS';
 import { map } from 'rxjs/operators';
@@ -19,6 +20,8 @@ import { deleteAsistenteRQ } from '../clases/deleteAsistenteRQ';
 import { deleteAsistenteRS } from '../clases/deleteAsistenteRS';
 import { updateCursoRS } from '../clases/updateCursoRS';
 import { updateCursoRQ } from '../clases/updateCursoRQ';
+import { createCursoRQ } from '../clases/createCursoRQ';
+import { createCursoRS } from '../clases/createCursoRS';
 
 
 @Injectable({
@@ -26,17 +29,17 @@ import { updateCursoRQ } from '../clases/updateCursoRQ';
 })
 export class CursosService {
 
-//   private httpOptions = {
-//     headers: new HttpHeaders({
-//         'Content-Type': 'application/json',
-//         'Access-Control-Allow-Origin': '*',
-//         'Access-Control-Allow-Credentials': 'true',
-//         'Access-Control-Allow-Headers': 'Content-Type',
-//         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-//     })
-// };
-
   constructor(private _httpClient: HttpClient) { }
+
+
+  public postCurso(RQ:createCursoRQ):Observable<createCursoRS>{
+    return this._httpClient.post('AepectApiRest/cursos/createCurso.php',
+    {
+      RQ
+    }).pipe(map((res: createCursoRS) =>{
+      return res;
+    }));
+  } 
 
   public getCursosListEntrada(): Observable<Array<Curso>> {
     return this._httpClient.get('AepectApiRest/cursos/getCursosList.php').pipe(
@@ -77,6 +80,20 @@ export class CursosService {
       if (res.error=="Exito")
       {
         return res.curso;
+      }else{
+        return undefined;
+      }
+    }));
+  }
+
+  public getFormularioCurso(id:number): Observable<getFromualrioCursoRS>{
+    return this._httpClient.post('AepectApiRest/cursos/getFormularioCurso.php',
+    {
+      id
+    }).pipe(map((res:getFromualrioCursoRS) =>{
+      if (res.error=="Exito")
+      {
+        return res;
       }else{
         return undefined;
       }

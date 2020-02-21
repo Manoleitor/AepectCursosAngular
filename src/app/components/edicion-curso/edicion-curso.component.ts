@@ -9,6 +9,7 @@ import { getAsistenteRQ } from 'src/app/clases/getAsistenteRQ';
 import { updateAsistenteRQ } from 'src/app/clases/updateAsistenteRQ';
 import { deleteAsistenteRQ } from 'src/app/clases/deleteAsistenteRQ';
 import { updateCursoRQ } from 'src/app/clases/updateCursoRQ';
+import { createCursoRQ } from 'src/app/clases/createCursoRQ';
 
 @Component({
   selector: 'app-edicion-curso',
@@ -18,31 +19,31 @@ import { updateCursoRQ } from 'src/app/clases/updateCursoRQ';
 export class EdicionCursoComponent implements OnInit {
 
   private token: string;
-  private id: number;
-  private curso: Curso;
-  private asistentes: Array<asistente>;
-  private idAsistenteEditar: number;
-  private listaEmails: string = "";
-  private listaAdmitidosCoche: string = "";
-  private listaAdmitidosBus: string = "";
-  private listaNoAdmitidosCoche: string = "";
-  private listaNoAdmitidosBus: string = "";
-  private listaAdmitidosSimple: string = "";
-  private listaNoAdmitidosSimple: string = "";
-  private listaAdmitidosDoble: string = "";
-  private listaNoAdmitidosDoble: string = "";
-  private listaAdmitidosIndiferente: string = "";
-  private listaNoAdmitidosIndiferente: string = "";
-  private listaAdmitidosCena: string = "";
-  private listaAdmitidosNoCena: string = "";
-  private listaNoAdmitidosCena: string = "";
-  private listaNoAdmitidosNoCena: string = "";
-  private editandoAnio:boolean = false;
-  private editandoNombre:boolean = false;
-  private editandoNParticipantes:boolean = false;
+  public id: number;
+  public curso: Curso;
+  public asistentes: Array<asistente>;
+  public idAsistenteEditar: number;
+  public listaEmails: string = "";
+  public listaAdmitidosCoche: string = "";
+  public listaAdmitidosBus: string = "";
+  public listaNoAdmitidosCoche: string = "";
+  public listaNoAdmitidosBus: string = "";
+  public listaAdmitidosSimple: string = "";
+  public listaNoAdmitidosSimple: string = "";
+  public listaAdmitidosDoble: string = "";
+  public listaNoAdmitidosDoble: string = "";
+  public listaAdmitidosIndiferente: string = "";
+  public listaNoAdmitidosIndiferente: string = "";
+  public listaAdmitidosCena: string = "";
+  public listaAdmitidosNoCena: string = "";
+  public listaNoAdmitidosCena: string = "";
+  public listaNoAdmitidosNoCena: string = "";
+  public editandoAnio: boolean = false;
+  public editandoNombre: boolean = false;
+  public editandoNParticipantes: boolean = false;
 
 
-  private tmpAsistente: asistente;
+  public tmpAsistente: asistente;
 
 
   constructor(private _cursosService: CursosService,
@@ -59,9 +60,11 @@ export class EdicionCursoComponent implements OnInit {
   ngOnInit() {
 
     this.id = this._activatedRoute.snapshot.params["id"];
+
+
     this._cursosService.getCurso(this.token, this.id).subscribe(res => {
       this.curso = res;
-      console.log(res);
+      // console.log(res);
       if (this.curso.asistentes != undefined) {
         this.asistentes = this.curso.asistentes;
         this.rellenarListaEmails();
@@ -71,6 +74,7 @@ export class EdicionCursoComponent implements OnInit {
     );
 
     this.idAsistenteEditar = -1;
+
   }
 
   cancelarEdicion() {
@@ -79,46 +83,60 @@ export class EdicionCursoComponent implements OnInit {
   }
 
   changeCena() {
-    if (this.curso[0].cena == undefined)
-      this.curso[0].cena = "1";
+    if (this.curso.cena == undefined)
+      this.curso.cena = 1;
     else
-      this.curso[0].cena = this.curso[0].cena == "0" ? "1" : "0";
+      this.curso.cena = this.curso.cena == 0 ? 1 : 0;
   }
 
-  changeEditarAnio()
-  {
+  changeEditarAnio() {
     this.editandoAnio = !this.editandoAnio;
   }
 
-  changeEditarNombre()
-  {
+  changeEditarNombre() {
     this.editandoNombre = !this.editandoNombre;
   }
 
-  changeEditarNParticipantes()
-  {
+  changeEditarNParticipantes() {
     this.editandoNParticipantes = !this.editandoNParticipantes;
   }
 
   changeHabitacion() {
-    if (this.curso[0].habitacion == undefined)
-      this.curso[0].habitacion = "1";
+    if (this.curso.habitacion == undefined)
+      this.curso.habitacion = 1;
     else
-      this.curso[0].habitacion = this.curso[0].habitacion == "0" ? "1" : "0";
+      this.curso.habitacion = this.curso.habitacion == 0 ? 1 : 0;
   }
 
   changeMovil() {
-    if (this.curso[0].movil == undefined)
-      this.curso[0].movil = "1";
+    if (this.curso.movil == undefined)
+      this.curso.movil = 1;
     else
-      this.curso[0].movil = this.curso[0].movil == "0" ? "1" : "0";
+      this.curso.movil = this.curso.movil == 0 ? 1 : 0;
   }
 
   changeTransporte() {
-    if (this.curso[0].transporte == undefined)
-      this.curso[0].transporte = "1";
+    if (this.curso.transporte == undefined)
+      this.curso.transporte = 1;
     else
-      this.curso[0].transporte = this.curso[0].transporte == "0" ? "1" : "0";
+      this.curso.transporte = this.curso.transporte == 0 ? 1 : 0;
+  }
+
+  crearNuevoCurso(curso: Curso) {
+    const RQ: createCursoRQ = {
+      token: this.token,
+      curso: curso
+    }
+
+    this._cursosService.postCurso(RQ).subscribe(res => {
+      if (res.error == "Exito") {
+        // console.log("bien");
+      } else {
+        console.log(res.error);
+      }
+    },
+      error => console.log(error));
+
   }
 
   editandoEsteAsistente(id: number) {
@@ -203,12 +221,14 @@ export class EdicionCursoComponent implements OnInit {
       cena: curso.cena
     };
 
-    console.log(curso);
+    // console.log(curso);
 
     this._cursosService.updateCurso(RQ).subscribe(res => {
       if (res.error == "Exito") {
         this._cursosService.getCurso(this.token, this.id).subscribe(resCurso => {
-          if (JSON.stringify(resCurso[0]).toUpperCase() != JSON.stringify(this.curso[0]).toUpperCase()) {
+          if(!(this.curso.transporte == resCurso.transporte) || !(this.curso.movil==resCurso.movil) ||
+          !(this.curso.habitacion == resCurso.habitacion) || !(this.curso.cena == resCurso.cena))
+          {
             this.mensajeError();
           }
         });
@@ -338,11 +358,11 @@ export class EdicionCursoComponent implements OnInit {
     this.listaEmails = tmpEmails.join(", ");
   }
 
-  
+
 
   tienePlaza(plaza: number) {
-    if (this.curso[0].maximos_participantes != undefined && this.curso[0].maximos_participantes > 0) {
-      return this.curso[0].maximos_participantes > plaza ? true : false;
+    if (this.curso.maximos_participantes != undefined && this.curso.maximos_participantes > 0) {
+      return this.curso.maximos_participantes > plaza ? true : false;
     }
     return true; // si no hay numero fijo máximo de plazas devolver siempre verdadero
   }

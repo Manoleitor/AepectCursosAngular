@@ -4,6 +4,7 @@ import { HomePonenteComponent } from './components/home-ponente/home-ponente.com
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EntradaComponent } from './components/entrada/entrada.component';
+import { NuevoCursoComponent } from './components/nuevo-curso/nuevo-curso.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'home-ponente', component: HomePonenteComponent },
   { path: 'nuevo-asistente-form/:id/:nombre/:anio', component: NuevoAsistenteFormComponent },
   { path: 'edicion-curso/:id', component:EdicionCursoComponent},
+  { path: 'nuevo-curso', component:NuevoCursoComponent},
   { path: '**', component: EntradaComponent }
 ];
 

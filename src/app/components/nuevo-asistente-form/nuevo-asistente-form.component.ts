@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { asistente } from 'src/app/clases/asistente';
 import { createAsistenteRQ } from 'src/app/clases/createAsistenteRQ';
+import { Curso } from 'src/app/clases/curso';
+import { isDevMode } from '@angular/core';
 
 @Component({
   selector: 'app-nuevo-asistente-form',
@@ -12,13 +14,14 @@ import { createAsistenteRQ } from 'src/app/clases/createAsistenteRQ';
 })
 export class NuevoAsistenteFormComponent implements OnInit {
 
-  private mensaje:string;
+  public mensaje:string;
   private id:number;
-  private nombreCurso:string;
-  private anio:string;
+  public nombreCurso:string;
+  public anio:string;
 
-  private mostrarMensajeExito:boolean = false;
-  private mostrarMensajeFrasaco:Boolean = false;
+  public mostrarMensajeExito:boolean = false;
+  public mostrarMensajeFrasaco:Boolean = false;
+  public curso:Curso;
   
   asistente:asistente;
 
@@ -31,6 +34,18 @@ export class NuevoAsistenteFormComponent implements OnInit {
     this.asistente = new asistente();
     
     this.id = this._activatedRoute.snapshot.params["id"];
+
+    this._cursosService.getFormularioCurso(this.id).subscribe(res=>{
+      if(res.error=="Exito")
+      {
+        this.curso = res.curso;
+        // console.log(this.curso);
+      }else{
+        console.log(res.error);
+      }
+    },
+    error=>console.log(error));
+
     this.asistente.idCurso = this.id;
     this.nombreCurso = this._activatedRoute.snapshot.params["nombre"];
     this.anio = this._activatedRoute.snapshot.params["anio"];
@@ -86,6 +101,11 @@ export class NuevoAsistenteFormComponent implements OnInit {
       );
 
     }
+  }
+
+  esModoDesarrollo()
+  {
+    return isDevMode();
   }
 
   rellenarDatosPrueba()
